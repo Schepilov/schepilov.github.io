@@ -1,0 +1,471 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&subset=latin,cyrillic);
+
+@font-face {
+    font-family: 'Agency FB Regular';
+    src: url('../fonts/agencyr-webfont.eot');
+    src: url('../fonts/agencyr-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/agencyr-webfont.woff') format('woff'),
+         url('../fonts/agencyr-webfont.ttf') format('truetype'),
+         url('../fonts/agencyr-webfont.svg#agency_fbregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Agency FB Bold';
+    src: url('../fonts/agencyb-webfont.eot');
+    src: url('../fonts/agencyb-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/agencyb-webfont.woff') format('woff'),
+         url('../fonts/agencyb-webfont.ttf') format('truetype'),
+         url('../fonts/agencyb-webfont.svg#agency_fbbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-color: #fff;
+}
+a {
+	outline: none !important;
+}
+
+:-moz-any-link:focus {
+  outline: none;
+}
+
+::selection {
+  background-color: #e5432a;
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: #e5432a;
+  color: #fff;
+}
+
+@media (min-width: 1020px) {
+	.container {
+		width: 1024px;
+	}
+}
+
+h1 {
+	font-family: 'Agency FB Bold', sans-serif;
+	font-size: 60px;
+	letter-spacing: 1px;
+}
+
+h2 {
+	font-family: 'Agency FB Bold', sans-serif;
+	font-size: 48px;
+	letter-spacing: 1px;
+}
+
+h3 {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 35px;
+	font-weight: 300;
+}
+
+h4 {
+	font-family: 'Agency FB Bold', sans-serif;
+	font-size: 26px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+p {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 19px;
+	font-weight: 300;
+}
+
+h2 span, h3 span {
+	display: block;
+	margin-bottom: 10px;
+}
+
+@media (max-width: 767px) {
+	h1 {
+		font-size: 46px;
+	}
+
+	h2 {
+		font-size: 28px;
+	}
+
+	p {
+		font-size: 16px;
+	}
+
+	h4 {
+		font-size: 24px;
+	}
+}
+
+#stories {
+	height: 652px;
+	color: #fff;
+	padding-top: 15px;
+	background-color: #f0534d;
+}
+
+#stories h4 {
+	font-size: 32px;
+	text-align: center;
+	margin: 20px auto;
+}
+
+#stories .stories_logos {
+	height: 64px;
+	line-height: 64px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#stories .stories_logo.mycom {
+	width: 142px;
+	height: 64px;
+	display: inline-block;
+	background: url(../img/mycom.png) no-repeat;
+	margin-top: 15px;
+}
+
+#stories .stories_logo.gameinsight {
+	width: 218px;
+	height: 64px;
+	display: inline-block;
+	background: url(../img/gameinsight.png) no-repeat;
+}
+
+#stories .stories_logo.ember {
+	width: 130px;
+	height: 64px;
+	display: inline-block;
+	background: url(../img/ember.png) no-repeat;
+}
+
+#stories .stories_logo.freyr {
+	width: 187px;
+	height: 64px;
+	display: inline-block;
+	background: url(../img/freyr.png) no-repeat;
+}
+
+#stories.jungle_heat {
+	background: #fff url(../img/jungle_heat_bg.png) no-repeat;
+}
+
+#stories .navigation {
+	width: 375px;
+	position: relative;
+	top: 30px;
+}
+
+#stories .navigation .arrow {
+	z-index: 1000;
+	position: absolute;
+	content: '';
+	display: block;
+	width: 16px;
+	height: 16px;
+	border: 2px solid rgba(255,255,255,0.35);
+	background: rgba(0,0,0,0);
+	border-left: 0;
+	border-top: 0;
+	outline: none;
+	cursor: pointer;
+}
+
+#stories .navigation .arrow.left {
+	left: -30px;
+	-webkit-transform: rotate(135deg);
+	-moz-transform: rotate(135deg);
+	-ms-transform: rotate(135deg);
+	-o-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+
+#stories .navigation .arrow.right {
+	right: -30px;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+#stories .arrow:hover,
+#stories .arrow:focus {
+	border-color: #791a0b;
+}
+
+#stories .indicators {
+	width: 375px;
+	position: relative;
+	top: 300px;
+	left: 125px;
+}
+
+#stories .indicators .indicator {
+	cursor: pointer;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 10px;
+	border-radius: 50%;
+	background-color: #9e0000;
+}
+
+#stories .indicators .indicator.active {
+	background-color: #fdcdcd;
+}
+
+#stories .carousel .info .header {
+	border-bottom: 1px solid #f45d5a;
+	padding-bottom: 10px;
+	margin-bottom: 20px !important;
+}
+
+#stories .carousel .info .header,
+#stories .carousel .content {
+	width: 375px;
+}
+
+#stories .carousel .info .case {
+	font-family: 'Agency FB Bold', sans-serif;
+	font-size: 57px;
+	float: left;
+	margin-right: 30px;
+}
+
+#stories .carousel .info .case_title {
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 27px;
+	padding-top: 8px;
+}
+
+#stories .carousel .info .case_company {
+	display: block;
+	font-family: 'Agency FB Regular', sans-serif;
+	font-size: 21px;
+	margin-top: -5px;
+}
+
+#stories .carousel .content .app_icon {
+	float: left;
+	margin-right: 30px;
+	border-radius: 15px;
+	box-shadow:    rgba(169, 56, 55,05) -1px 1px,
+		            rgba(169, 56, 55,.05) -2px 2px,
+		            rgba(169, 56, 55,.05) -3px 3px,
+		            rgba(169, 56, 55,.05) -4px 4px,
+		            rgba(169, 56, 55,.04) -5px 5px,
+		            rgba(169, 56, 55,.04) -6px 6px,
+		            rgba(169, 56, 55,.04) -7px 7px,
+		            rgba(169, 56, 55,.04) -8px 8px,
+		            rgba(169, 56, 55,.04) -9px 9px,
+		            rgba(169, 56, 55,.03) -10px 10px,
+		            rgba(169, 56, 55,.03) -11px 11px,
+		            rgba(169, 56, 55,.03) -12px 12px,
+		            rgba(169, 56, 55,.03) -13px 13px,
+		            rgba(169, 56, 55,.03) -14px 14px,
+		            rgba(169, 56, 55,.02) -15px 15px,
+		            rgba(169, 56, 55,.02) -16px 16px,
+		            rgba(169, 56, 55,.02) -17px 17px,
+		            rgba(169, 56, 55,.02) -18px 18px,
+		            rgba(169, 56, 55,.02) -19px 19px,
+		            rgba(169, 56, 55,.01) -20px 20px,
+		            rgba(169, 56, 55,.01) -21px 21px,
+		            rgba(169, 56, 55,.01) -22px 22px,
+		            rgba(169, 56, 55,.01) -23px 23px,
+		            rgba(169, 56, 55,.01) -24px 24px,
+		            rgba(169, 56, 55,.009) -25px 25px,
+		            rgba(169, 56, 55,.009) -26px 26px,
+		            rgba(169, 56, 55,.009) -27px 27px,
+		            rgba(169, 56, 55,.009) -28px 28px,
+		            rgba(169, 56, 55,.009) -29px 29px,
+		            rgba(169, 56, 55,.008) -30px 30px,
+		            rgba(169, 56, 55,.008) -31px 31px,
+		            rgba(169, 56, 55,.008) -32px 32px,
+		            rgba(169, 56, 55,.008) -33px 33px,
+		            rgba(169, 56, 55,.008) -34px 34px,
+		            rgba(169, 56, 55,.007) -35px 35px,
+		            rgba(169, 56, 55,.007) -36px 36px,
+		            rgba(169, 56, 55,.007) -37px 37px,
+		            rgba(169, 56, 55,.007) -38px 38px,
+		            rgba(169, 56, 55,.007) -39px 39px,
+		            rgba(169, 56, 55,.006) -40px 40px,
+		            rgba(169, 56, 55,.006) -41px 41px,
+		            rgba(169, 56, 55,.006) -42px 42px,
+		            rgba(169, 56, 55,.006) -43px 43px,
+		            rgba(169, 56, 55,.006) -44px 44px,
+		            rgba(169, 56, 55,.005) -45px 45px,
+		            rgba(169, 56, 55,.004) -46px 46px,
+		            rgba(169, 56, 55,.003) -47px 47px,
+		            rgba(169, 56, 55,.002) -48px 48px,
+		            rgba(169, 56, 55,.001) -49px 49px,
+		            rgba(169, 56, 55,.0) -50px 50px;
+}
+
+#stories .carousel .content .case_type {
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 25px;
+	margin-bottom: 10px;
+}
+
+#stories .carousel .content .stats_titles {
+	float: left;
+}
+
+#stories .carousel .content .installs_cnt,
+#stories .carousel .content .ios_us_overal,
+#stories .carousel .content .ios_us_games,
+#stories .carousel .content .ios_us_overal_numbers,
+#stories .carousel .content .ios_us_games_numbers {
+	display: block;
+	font-family: 'Agency FB Regular', sans-serif;
+	font-size: 19px;
+}
+
+#stories .carousel .content .ios_us_overal_numbers,
+#stories .carousel .content .ios_us_games_numbers {
+	text-align: right;
+}
+
+#stories .carousel .content .ios_us_overal_numbers em,
+#stories .carousel .content .ios_us_games_numbers em {
+	font-style: normal;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+@media (max-width: 1279px) {
+	#stories {
+		padding-top: 160px;
+		padding-bottom: 50px;
+		min-height: 100%;
+		height: auto;
+		background: #db4945 !important;
+	}
+}
+
+@media (max-width: 991px) {
+	#stories {
+		padding-top: 70px;
+		padding-bottom: 30px;
+	}
+
+	#stories h4 {
+		font-size: 16px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
+	#stories .stories_logo.mycom {
+		margin: 0;
+	}
+
+	#stories .navigation {
+		top: 20px;
+	}
+
+	#stories .navigation .arrow.left {
+		left: 5px;
+	}
+
+	#stories .navigation .arrow.right {
+		right: 5px;
+	}
+
+	#stories .navigation,
+	#stories .carousel .info .header,
+	#stories .carousel .content,
+	#stories .carousel .diagram img {
+		margin: 0 auto;
+	}
+
+	#stories .carousel .info .header,
+	#stories .carousel .content {
+		padding-left: 35px;
+		padding-right: 35px;
+	}
+
+	#stories .navigation,
+	#stories .carousel .info .header,
+	#stories .carousel .content {
+		max-width: 375px;
+		width: auto;
+	}
+
+
+	#stories .carousel .content {
+		margin-bottom: 25px;
+	}
+
+	#stories .carousel .info .case {
+		font-size: 34px;
+		margin-right: 40px;
+	}
+
+	#stories .carousel .info .case_title {
+		font-size: 18px;
+	}
+
+	#stories .carousel .info .case_company,
+	#stories .carousel .content .case_type {
+		font-size: 12px;
+	}
+
+	#stories .carousel .content .app_icon {
+		width: 62px;
+		height: 62px;
+	}
+
+	#stories .carousel .content .installs_cnt,
+	#stories .carousel .content .ios_us_overal,
+	#stories .carousel .content .ios_us_games,
+	#stories .carousel .content .ios_us_overal_numbers,
+	#stories .carousel .content .ios_us_games_numbers {
+		font-size: 11px;
+	}
+
+	#stories .stories_logo.mycom {
+		width: 71px;
+		height: 32px;
+	}
+
+	#stories .stories_logo.gameinsight {
+		width: 109px;
+		height: 32px;
+	}
+
+	#stories .stories_logo.ember {
+		width: 65px;
+		height: 32px;
+	}
+
+	#stories .stories_logo.freyr {
+		width: 94px;
+		height: 32px;
+	}
+
+	#stories .stories_logo.mycom,
+	#stories .stories_logo.gameinsight,
+	#stories .stories_logo.ember,
+	#stories .stories_logo.freyr {
+		background-size: 100% auto;
+	}
+}
