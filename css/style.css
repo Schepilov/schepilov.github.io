@@ -454,3 +454,8 @@ h2 span, h3 span {
 		background-size: 100% auto;
 	}
 }
+
+body:after {
+	display: none;
+	content: url(../img/jungle_heat_bg.png), url(../img/the_tribez_bg.png), url(../img/battle_beach_bg.png), url(../img/call_of_arena_bg.png);
+}
