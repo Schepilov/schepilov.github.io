@@ -12,7 +12,7 @@
     </head>
     <body>
 
-      <section id="stories" class="jungle_heat">
+      <section id="stories">
 
          <div class="container">
           <div class="row">
@@ -37,69 +37,169 @@
           </div>
         </div>
 
-        <div class="container">
+        <div class="container slide" id="cases_carousel" data-ride="carousel">
 
-          <div class="indicators visible-lg">
-
-            <a href="#" class="indicator active"></a>
-            <a href="#" class="indicator"></a>
-            <a href="#" class="indicator"></a>
-            <a href="#" class="indicator"></a>
-            
+          <div class="indicators visible-lg carousel-indicators">
+            <li data-target="#cases_carousel" data-slide-to="0" class="indicator active"></li>
+            <li data-target="#cases_carousel" data-slide-to="1" class="indicator"></li>
+            <li data-target="#cases_carousel" data-slide-to="2" class="indicator"></li>
           </div>
 
           <div class="navigation">
 
-            <a href="#" class="arrow left"></a>
-            <a href="#" class="arrow right"></a>
+           <a class="left carousel-control" href="#cases_carousel" data-slide="prev">
+              <span class="arrow left"></span>
+            </a>
+            <a class="right carousel-control" href="#cases_carousel" data-slide="next">
+              <span class="arrow right"></span>
+            </a>
             
           </div>
 
-          <div class="row carousel">
+          <div class="carousel-inner">
 
-            <div class="col-xs-12 col-md-6 info">
+            <div class="row carousel item active">
 
-              <div class="header">
+              <div class="col-xs-12 col-md-6 info">
 
-                <span class="case">
-                  Case 1
-                </span>
+                <div class="header">
 
-                <span class="case_title">
-                  Jungle Heat
-                </span>
+                  <span class="case">
+                    Case 1
+                  </span>
 
-                <span class="case_company">
-                  my.com
-                </span>
+                  <span class="case_title">
+                    Jungle Heat
+                  </span>
+
+                  <span class="case_company">
+                    my.com
+                  </span>
+
+                </div>
+
+                <div class="content">
+                  
+                  <img src="img/jungle_heat.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
+                  <span class="case_type">Single promotion</span>
+                  <span class="installs_cnt">47 253 installs</span>
+                  <div class="stats_titles">
+                    <span class="ios_us_overal">iOS-US-Overall</span>
+                    <span class="ios_us_games">iOS-US-Games</span>
+                  </div>
+                  <div class="stats_numbers">
+                    <span class="ios_us_overal_numbers">3000+ <em>&rarr;</em> 88</span>
+                    <span class="ios_us_games_numbers">500+ <em>&rarr;</em> 44</span>
+                  </div>
+
+                </div>
 
               </div>
 
-              <div class="content">
-                
-                <img src="img/jungle_heat.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
-                <span class="case_type">Single promotion</span>
-                <span class="installs_cnt">47 253 installs</span>
-                <div class="stats_titles">
-                  <span class="ios_us_overal">iOS-US-Overall</span>
-                  <span class="ios_us_games">iOS-US-Games</span>
-                </div>
-                <div class="stats_numbers">
-                  <span class="ios_us_overal_numbers">3000+ <em>&rarr;</em> 88</span>
-                  <span class="ios_us_games_numbers">500+ <em>&rarr;</em> 44</span>
-                </div>
+              <div class="col-xs-12 col-md-6 diagram">
+
+                <img src="img/jungle_heat_diagram.png" class="img-responsive" title="Diagram for Jungle Heat by my.com">
 
               </div>
-
+              
             </div>
 
-            <div class="col-xs-12 col-md-6 diagram">
+            <div class="row carousel item">
 
-              <img src="img/jungle_heat_diagram.png" class="img-responsive" title="Diagram for Jungle Heat by my.com">
+              <div class="col-xs-12 col-md-6 info">
 
+                <div class="header">
+
+                  <span class="case">
+                    Case 2
+                  </span>
+
+                  <span class="case_title">
+                    The Tribez
+                  </span>
+
+                  <span class="case_company">
+                    Game Insight
+                  </span>
+
+                </div>
+
+                <div class="content">
+                  
+                  <img src="img/the_tribez.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
+                  <span class="case_type">Single promotion</span>
+                  <span class="installs_cnt">47 253 installs</span>
+                  <div class="stats_titles">
+                    <span class="ios_us_overal">iOS-US-Overall</span>
+                    <span class="ios_us_games">iOS-US-Games</span>
+                  </div>
+                  <div class="stats_numbers">
+                    <span class="ios_us_overal_numbers">3000+ <em>&rarr;</em> 88</span>
+                    <span class="ios_us_games_numbers">500+ <em>&rarr;</em> 44</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-md-6 diagram">
+
+                <img src="img/the_tribez_diagram.png" class="img-responsive"title="Diagram for Jungle Heat by my.com">
+
+              </div>
+              
+            </div>
+
+            <div class="row carousel item">
+
+              <div class="col-xs-12 col-md-6 info">
+
+                <div class="header">
+
+                  <span class="case">
+                    Case 3
+                  </span>
+
+                  <span class="case_title">
+                    Jungle Heat
+                  </span>
+
+                  <span class="case_company">
+                    my.com
+                  </span>
+
+                </div>
+
+                <div class="content">
+                  
+                  <img src="img/jungle_heat.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
+                  <span class="case_type">Single promotion</span>
+                  <span class="installs_cnt">47 253 installs</span>
+                  <div class="stats_titles">
+                    <span class="ios_us_overal">iOS-US-Overall</span>
+                    <span class="ios_us_games">iOS-US-Games</span>
+                  </div>
+                  <div class="stats_numbers">
+                    <span class="ios_us_overal_numbers">3000+ <em>&rarr;</em> 88</span>
+                    <span class="ios_us_games_numbers">500+ <em>&rarr;</em> 44</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-md-6 diagram">
+
+                <img src="img/jungle_heat_diagram.png" class="img-responsive"title="Diagram for Jungle Heat by my.com">
+
+              </div>
+              
             </div>
             
+
           </div>
+
+        </div>
 
         </section>
 
@@ -107,5 +207,10 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
+      <script type="text/javascript">
+        $('#cases_carousel').carousel({
+          interval: 2000
+        })
+      </script>
     </body>
   </html>
