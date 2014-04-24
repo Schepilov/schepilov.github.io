@@ -384,8 +384,8 @@ h2 span, h3 span {
 
 	#stories .carousel .info .header,
 	#stories .carousel .content {
-		padding-left: 35px;
-		padding-right: 35px;
+		padding-left: 15px;
+		padding-right: 15px;
 	}
 
 	#stories .navigation,
@@ -406,7 +406,7 @@ h2 span, h3 span {
 	}
 
 	#stories .carousel .info .case_title {
-		font-size: 18px;
+		font-size: 16px;
 	}
 
 	#stories .carousel .info .case_company,
