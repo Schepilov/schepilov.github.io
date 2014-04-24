@@ -43,6 +43,7 @@
             <li data-target="#cases_carousel" data-slide-to="0" class="indicator active"></li>
             <li data-target="#cases_carousel" data-slide-to="1" class="indicator"></li>
             <li data-target="#cases_carousel" data-slide-to="2" class="indicator"></li>
+            <li data-target="#cases_carousel" data-slide-to="3" class="indicator"></li>
           </div>
 
           <div class="navigation">
@@ -58,7 +59,7 @@
 
           <div class="carousel-inner">
 
-            <div class="row carousel item active">
+            <div id="jungle_heat" class="row carousel item active">
 
               <div class="col-xs-12 col-md-6 info">
 
@@ -104,7 +105,7 @@
               
             </div>
 
-            <div class="row carousel item">
+            <div id="the_tribez" class="row carousel item">
 
               <div class="col-xs-12 col-md-6 info">
 
@@ -126,7 +127,7 @@
 
                 <div class="content">
                   
-                  <img src="img/the_tribez.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
+                  <img src="img/the_tribez.png" width="122" height="122" class="app_icon" title="The Tribez by Game Insight">
                   <span class="case_type">Single promotion</span>
                   <span class="installs_cnt">47 253 installs</span>
                   <div class="stats_titles">
@@ -144,13 +145,13 @@
 
               <div class="col-xs-12 col-md-6 diagram">
 
-                <img src="img/the_tribez_diagram.png" class="img-responsive"title="Diagram for Jungle Heat by my.com">
+                <img src="img/the_tribez_diagram.png" class="img-responsive" title="Diagram for The Tribez by Game Insight">
 
               </div>
               
             </div>
 
-            <div class="row carousel item">
+            <div id="battle_beach" class="row carousel item">
 
               <div class="col-xs-12 col-md-6 info">
 
@@ -161,18 +162,18 @@
                   </span>
 
                   <span class="case_title">
-                    Jungle Heat
+                    Battle Beach
                   </span>
 
                   <span class="case_company">
-                    my.com
+                    Ember Entertament
                   </span>
 
                 </div>
 
                 <div class="content">
                   
-                  <img src="img/jungle_heat.png" width="122" height="122" class="app_icon" title="Jungle Heat by my.com">
+                  <img src="img/battle_beach.png" width="122" height="122" class="app_icon" title="Battle Beach by Ember Entertament">
                   <span class="case_type">Single promotion</span>
                   <span class="installs_cnt">47 253 installs</span>
                   <div class="stats_titles">
@@ -190,7 +191,53 @@
 
               <div class="col-xs-12 col-md-6 diagram">
 
-                <img src="img/jungle_heat_diagram.png" class="img-responsive"title="Diagram for Jungle Heat by my.com">
+                <img src="img/battle_beach_diagram.png" class="img-responsive" title="Diagram for Battle Beach by Ember Entertament">
+
+              </div>
+              
+            </div>
+
+            <div id="call_of_arena" class="row carousel item">
+
+              <div class="col-xs-12 col-md-6 info">
+
+                <div class="header">
+
+                  <span class="case">
+                    Case 4
+                  </span>
+
+                  <span class="case_title">
+                    Call of Arena
+                  </span>
+
+                  <span class="case_company">
+                    Freyr Games
+                  </span>
+
+                </div>
+
+                <div class="content">
+                  
+                  <img src="img/call_of_arena.png" width="122" height="122" class="app_icon" title="Call of Arena by Freyr Games">
+                  <span class="case_type">Single promotion</span>
+                  <span class="installs_cnt">47 253 installs</span>
+                  <div class="stats_titles">
+                    <span class="ios_us_overal">iOS-US-Overall</span>
+                    <span class="ios_us_games">iOS-US-Games</span>
+                  </div>
+                  <div class="stats_numbers">
+                    <span class="ios_us_overal_numbers">3000+ <em>&rarr;</em> 88</span>
+                    <span class="ios_us_games_numbers">500+ <em>&rarr;</em> 44</span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="col-xs-12 col-md-6 diagram">
+
+                <img src="img/call_of_arena_diagram.png" class="img-responsive" title="Diagram for Call of Arena by Freyr Games">
 
               </div>
               
@@ -198,6 +245,8 @@
             
 
           </div>
+
+          
 
         </div>
 
@@ -209,8 +258,37 @@
       <script src="js/bootstrap.min.js"></script>
       <script type="text/javascript">
         $('#cases_carousel').carousel({
-          interval: 2000
+          interval: 5000
         })
+
+        $(function(){
+          $('#cases_carousel').on('slid.bs.carousel', function () {
+             if ($('#the_tribez').hasClass('active')) {
+               $('#stories').addClass('the_tribez')
+            }
+            else { 
+              $('#stories').removeClass('the_tribez') 
+            }
+            if ($('#jungle_heat').hasClass('active')) {
+               $('#stories').addClass('jungle_heat')
+            }
+            else { 
+              $('#stories').removeClass('jungle_heat') 
+            }
+            if ($('#battle_beach').hasClass('active')) {
+               $('#stories').addClass('battle_beach') 
+            }
+            else { 
+              $('#stories').removeClass('battle_beach') 
+            }
+            if ($('#call_of_arena').hasClass('active')) {
+               $('#stories').addClass('call_of_arena') 
+            }
+            else { 
+              $('#stories').removeClass('call_of_arena') 
+            }
+          });
+       });
       </script>
     </body>
   </html>

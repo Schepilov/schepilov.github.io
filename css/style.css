@@ -115,7 +115,12 @@ h2 span, h3 span {
 	height: 652px;
 	color: #fff;
 	padding-top: 15px;
-	background-color: #f0534d;
+	background: #f0534d url(../img/jungle_heat_bg.png) no-repeat;
+	-webkit-transition: background-image 0.2s ease-in-out;
+	-moz-transition: background-image 0.2s ease-in-out;
+	-ms-transition: background-image 0.2s ease-in-out;
+	-o-transition: background-image 0.2s ease-in-out;
+	transition: background-image 0.2s ease-in-out;
 }
 
 #stories h4 {
@@ -162,6 +167,18 @@ h2 span, h3 span {
 
 #stories.jungle_heat {
 	background: #fff url(../img/jungle_heat_bg.png) no-repeat;
+}
+
+#stories.the_tribez {
+	background: #fff url(../img/the_tribez_bg.png) no-repeat;
+}
+
+#stories.battle_beach {
+	background: #fff url(../img/battle_beach_bg.png) no-repeat;
+}
+
+#stories.call_of_arena {
+	background: #fff url(../img/call_of_arena_bg.png) no-repeat;
 }
 
 #stories .navigation {
@@ -239,6 +256,10 @@ h2 span, h3 span {
 	border: none;
 }
 
+#stories .carousel {
+	margin: 0;
+}
+
 #stories .carousel .info .header {
 	border-bottom: 1px solid #f45d5a;
 	padding-bottom: 10px;
@@ -310,6 +331,10 @@ h2 span, h3 span {
 	font-style: normal;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+#stories .carousel .diagram {
+
 }
 
 @media (max-width: 1279px) {
