@@ -1,11 +1,13 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:500,400,300,600,700&subset=latin,cyrillic);
 
 body {
+	background-color: #f8f8f8;
 	font-family: 'Open Sans', sans-serif;
 	padding-top: 50px;
 	-moz-font-smoothing: none;
 	font-smoothing: antialiased;
 	-webkit-font-smoothing: antialiased;
+	padding-bottom: 200px;
 }
 
 a, a:hover {
@@ -30,7 +32,7 @@ a, a:hover {
 .featured {
 	cursor: pointer;
 	position: relative;
-	min-height: 250px;
+	min-height: 300px;
 	background-size: cover;
 	background-position: center;
 	padding: 0;
@@ -65,8 +67,19 @@ a, a:hover {
 }
 
 .featured .caption h3 {
+	display: block;
 	font-size: 20px;
 	font-weight: 400;
+}
+
+.featured .caption h3>span {
+	border-bottom: 1px solid transparent;
+	transition: border-color ease-in-out .3s;
+	-webkit-transition: border-color ease-in-out .3s;
+}
+
+.featured .caption h3:hover>span{
+	border-bottom: 1px solid #fff;
 }
 
 .featured .caption p {
@@ -108,14 +121,272 @@ a, a:hover {
 	}
 }
 
-section h1 {
+section h1>span {
 	font-weight: 300;
-	display: inline-block;
-	border-bottom: 1px solid transparent;
-	transition: border-color ease-in-out .3s;
-	-webkit-transition: border-color ease-in-out .3s;
+	-webkit-transition: color ease-in-out .25s;
 }
 
-section a:hover h1 {
-	border-bottom: 1px solid;
+section a:hover h1>span {
+	color: #428bca;
+}
+
+/* News */
+
+.news {
+	padding-top: 50px;
+}
+
+.news .news-list,
+.news .news-content {
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.news .news-list {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-right: 15px dotted #f8f8f8;
+	padding-left: 25px;
+	padding-right: 15px;
+	padding-bottom: 25px;
+}
+
+.news .custom_scroll {
+	max-height: 575px;
+	overflow: hidden;
+}
+
+.news .news-list .fa {
+	color: #eb9737;
+}
+
+.news .news-content {
+	padding: 0 35px 5px 35px;
+	border-top-left-radius: 0;
+}
+
+.news .nav>li>h3 {
+	font-weight: 300;
+	margin-top: 5px;
+}
+
+.news .nav>li>a {
+	padding: 5px 0;
+	font-size: 16px;
+	-webkit-transition: color ease-in-out .25s;
+}
+
+.news .nav>li>a>em {
+	font-style: normal;
+}
+
+.news small {
+	display: block;
+	color: #999;
+}
+
+.news .nav>li>a>small {
+	display: block;
+}
+
+.news .nav>li.date {
+	margin-top: 25px;
+}
+
+.news .nav>li.date:first-child {
+	margin-top: 0;
+}
+
+.news .nav-pills>li.active>a,
+.news .nav-pills>li.active>a:hover,
+.news .nav-pills>li.active>a:focus {
+	color: #428bca;
+	background-color: transparent;
+}
+
+.news .nav>li>a:hover,
+.news .nav>li>a:focus {
+	background-color: transparent;
+	color: #428bca;
+}
+
+.news .news_meta {
+	margin-bottom: 10px;
+}
+
+.news .news_meta>span {
+	margin-right: 15px;
+}
+
+.news .news_meta>span>a {
+	-webkit-transition: color ease-in-out .25s;
+}
+
+.news .news_meta>span .fa {
+	margin-right: 5px;
+}
+
+.news a>h2>span {
+	-webkit-transition: color ease-in-out .25s;
+}
+
+.news a:hover>h2>span,
+.news .news_meta>span>a:hover {
+	color: #428bca;
+}
+
+.news .social_buttons {
+	margin: 25px auto;
+	text-align: center;
+}
+
+.news .social_buttons>button {
+	width: 75px;
+	margin: 0 25px;
+}
+
+
+/* Videos */
+
+.video {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+ 
+.video iframe,
+.video object,
+.video embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Custom Scroll */
+
+/* basic scrollbar styling */
+/* vertical scrollbar */
+.mCSB_container{
+	width:auto;
+	margin-right:30px;
+	overflow:hidden;
+}
+.mCSB_container.mCS_no_scrollbar{
+	margin-right:0;
+}
+.mCS_disabled>.mCustomScrollBox>.mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed>.mCustomScrollBox>.mCSB_container.mCS_no_scrollbar{
+	margin-right:30px;
+}
+.mCustomScrollBox>.mCSB_scrollTools{
+	width:16px;
+	height:100%;
+	top:0;
+	right:0;
+}
+.mCSB_scrollTools .mCSB_draggerContainer{
+	position:absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:-10px; 
+	height:auto;
+}
+.mCSB_scrollTools a+.mCSB_draggerContainer{
+	margin:20px 0;
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+	width:2px;
+	height:100%;
+	margin:0 auto;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
+.mCSB_scrollTools .mCSB_dragger{
+	cursor:pointer;
+	width:100%;
+	height:30px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+	width:4px;
+	height:100%;
+	margin:0 auto;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	text-align:center;
+}
+.mCSB_scrollTools .mCSB_buttonUp,
+.mCSB_scrollTools .mCSB_buttonDown{
+	display:block;
+	position:relative;
+	height:20px;
+	overflow:hidden;
+	margin:0 auto;
+	cursor:pointer;
+}
+.mCSB_scrollTools .mCSB_buttonDown{
+	top:100%;
+	margin-top:-40px;
+}
+
+.mCustomScrollBox{
+	-ms-touch-action:none; /*MSPointer events - direct all pointer events to js*/
+}
+
+
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_draggerRail{
+	width:4px;
+	background:#000; /* rgba fallback */
+	background: transparent;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	border-radius:2px;
+}
+
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	width:6px;
+	background:#000; /* rgba fallback */
+	background:rgba(0,0,0,0);
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+}
+.custom_scroll:hover .mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+	background:rgba(0,0,0,0.5)
+}
+.mCS-dark-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_draggerRail{
+	width:100%;
+	height:4px;
+	margin:6px 0;
+}
+.mCS-dark-thick.mCSB_horizontal>.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+	width:100%;
+	height:6px;
+	margin:5px auto;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+	background:rgba(0,0,0,0.7) !important;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+	background:rgba(0,0,0,0.7);
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonUp{
+	background-position:-96px 0;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonDown{
+	background-position:-96px -20px;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonLeft{
+	background-position:-100px -40px;
+}
+.mCS-dark-thick>.mCSB_scrollTools .mCSB_buttonRight{
+	background-position:-100px -56px;
 }
