@@ -265,7 +265,7 @@ section a:hover h1>span {
 	}
 
 	.news .social_buttons>button {
-		margin: 0;
+		margin: 5px 0;
 	}
 }
 
