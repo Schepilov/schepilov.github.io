@@ -227,6 +227,7 @@ section a:hover h1>span {
 }
 
 .news a>h2>span {
+	font-weight: 300;
 	-webkit-transition: color ease-in-out .25s;
 }
 
