@@ -24,7 +24,7 @@ body {
 
 .featured {
 	position: relative;
-	min-height: 350px;
+	min-height: 250px;
 	background-size: cover;
 	background-position: center;
 	padding: 0;
