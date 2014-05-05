@@ -28,6 +28,7 @@ a, a:hover {
 }
 
 .featured {
+	cursor: pointer;
 	position: relative;
 	min-height: 250px;
 	background-size: cover;
