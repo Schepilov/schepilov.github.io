@@ -145,7 +145,7 @@ section a:hover h1>span {
 .news .news-list {
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
-	border-right: 15px dotted #f8f8f8;
+	border-right: 15px solid #f8f8f8;
 	padding-left: 25px;
 	padding-right: 15px;
 	padding-bottom: 25px;
@@ -257,7 +257,11 @@ section a:hover h1>span {
 		padding-left: 35px;
 		padding-right: 35px;
 		border-right: none;
-		border-bottom: 15px dotted #f8f8f8;
+		border-bottom: 15px solid #f8f8f8;
+	}
+
+	.news .news-content {
+		border-top-right-radius: 0;
 	}
 
 	.news .custom_scroll {
