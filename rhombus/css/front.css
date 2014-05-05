@@ -86,7 +86,7 @@ body {
 
 @media (max-width: 767px) {
 	.featured {
-		min-height: 250px;
+		min-height: 150px;
 		height: auto;
 	}
 
