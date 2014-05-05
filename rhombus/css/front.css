@@ -245,6 +245,31 @@ section a:hover h1>span {
 	margin: 0 25px;
 }
 
+@media (max-width: 768px) {
+	.news .social_buttons>button {
+		margin: 0 5px;
+	}
+}
+
+@media (max-width: 750px) {
+	.news .news-list {
+		border-top-right-radius: 10px;
+		padding-left: 35px;
+		padding-right: 35px;
+		border-right: none;
+		border-bottom: 15px dotted #f8f8f8;
+	}
+
+	.news .custom_scroll {
+		max-height: 250px;
+	}
+
+	.news .social_buttons>button {
+		margin: 0;
+	}
+}
+
+
 
 /* Videos */
 
