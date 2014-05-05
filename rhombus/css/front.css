@@ -61,43 +61,6 @@ body {
 .featured .caption h3 {
 	font-size: 20px;
 	font-weight: 400;
-	-webkit-transform: translate(0, 10px);
-	-moz-transform: translate(0, 10px);
-	-ms-transform: translate(0, 10px);
-	-o-transform: translate(0, 10px);
-	transform: translate(0, 10px);
-	-webkit-transition-property: all;
-	-webkit-transition-duration: 0.25s;
-}
-
-.featured:hover .caption h3 {
-	-webkit-transform: translate(0, 0);
-	-moz-transform: translate(0, 0);
-	-ms-transform: translate(0, 0);
-	-o-transform: translate(0, 0);
-	transform: translate(0, 0);
-}
-
-.featured .caption p {
-	height: 0;
-	overflow: hidden;
-	position: relative;
-	-webkit-transform: translate(0, 20px);
-	-moz-transform: translate(0, 20px);
-	-ms-transform: translate(0, 20px);
-	-o-transform: translate(0, 20px);
-	transform: translate(0, 20px);
-	-webkit-transition-property: all;
-	-webkit-transition-duration: 0.25s;
-}
-
-.featured:hover .caption p {
-	height: auto;
-	-webkit-transform: translate(0, 0);
-	-moz-transform: translate(0, 0);
-	-ms-transform: translate(0, 0);
-	-o-transform: translate(0, 0);
-	transform: translate(0, 0);
 }
 
 .featured .caption .author a {
@@ -129,18 +92,5 @@ body {
 
 	.featured .caption {
 		top: 0;
-	}
-
-	.featured .caption h3,
-	.featured .caption p {
-		-webkit-transform: translate(0, 0);
-		-moz-transform: translate(0, 0);
-		-ms-transform: translate(0, 0);
-		-o-transform: translate(0, 0);
-		transform: translate(0, 0);
-	}
-
-	.featured .caption p {
-		height: auto;
 	}
 }
