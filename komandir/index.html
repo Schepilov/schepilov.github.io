@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link href="images/icons/apple-touch-icon-152x152.png" rel="apple-touch-icon">
+		<link sizes="57x57" href="images/icons/apple-touch-icon-57x57.png" rel="apple-touch-icon">
+		<link sizes="72x72" href="images/icons/apple-touch-icon-72x72.png" rel="apple-touch-icon">
+		<link sizes="76x76" href="images/icons/apple-touch-icon-76x76.png" rel="apple-touch-icon">
+		<link sizes="114x114" href="images/icons/apple-touch-icon-114x114.png" rel="apple-touch-icon">
+		<link sizes="120x120" href="images/icons/apple-touch-icon-120x120.png" rel="apple-touch-icon">
+		<link sizes="144x144" href="images/icons/apple-touch-icon-144x144.png" rel="apple-touch-icon">
+		<link sizes="152x152" href="images/icons/apple-touch-icon-152x152.png" rel="apple-touch-icon">
+		<meta name="application-name" content="CSSSR Project Template">
+		<meta name="msapplication-tooltip" content="A template for a quick start.">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="images/icons/tile.png">
+		<meta name="msapplication-square70x70logo" content="images/icons/tile.png">
+		<meta name="msapplication-square150x150logo" content="images/icons/tile.png">
+		<meta name="msapplication-square310x310logo" content="images/icons/tile.png">
+		<meta name="msapplication-wide310x150logo" content="images/icons/tile-wide.png">
+		<meta name="msapplication-starturl" content="https://csssr.github.io/csssr-project-template/">
+		<meta name="msapplication-tap-highlight" content="no">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--[if IE]><meta name="imagetoolbar" content="no"><meta name="msthemecompatible" content="no"><![endif]-->
+		<meta name="cleartype" content="on">
+		<meta name="HandheldFriendly" content="True">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="address=no">
+		<title>Командир.</title>
+		<meta name="description" content="A template for a quick start.">
+		<meta name="keywords" content="csssr, project, template, frontend, grunt, jade, stylus">
+		<meta name="copyright" content="©CSSSR">
+		<meta name="reply-to" content="production@csssr.com">
+		<link href="favicon.ico" rel="shortcut icon">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&amp;subset=latin,cyrillic" rel="stylesheet">
+		<link href="styles/main.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<a href="javascript:void(0)" target="_blank" title="Командир." class="logo">
+					<img src="images/logo.png" width="206px" height="56px">
+				</a>
+				<div class="logo"></div>
+				<div class="checkers"></div>
+				<div class="phone">
+					<h1 class="h1">Заказ такси бизнес-класса</h1>
+					<h2 class="h2 gray"><a href="tel:+74959888888">+7 (495) 9-888-888</a></h2>
+				</div>
+			</div>
+		</div>
+		<div class="order">
+			<div class="container">
+				<div class="order__form">
+					<h1 class="h1">Заказать такси</h1><span class="city__desc">на Mercedes-Benz E-Class в&nbsp<select id="input_city" name="city" class="city__choice"><option value="7700000000000" selected="selected">Москве</option><option value="7800000000000">Санкт-Петербурге</option></select></span>
+					<div
+					class="address">
+						<div class="inputs">
+							<div id="from" class="input">
+								<div class="input__from typeahead-holder"><span class="map__marker"></span><span style="display: none;" class="clear__btn"></span>
+									<div style="display: none;" class="address_inputs">
+										<form id="exact_adress_from">
+											<div class="option">
+												<label for="house_from">дом</label>
+												<input type="text" name="house_from" id="house_from">
+											</div>
+											<div class="option">
+												<label for="building_from">строение</label>
+												<input type="text" name="building_from" id="building_from">
+											</div>
+											<div class="option">
+												<label for="case_from">корпус</label>
+												<input type="text" name="case_from" id="case_from">
+											</div>
+											<div class="option">
+												<label for="entrance_from">подъезд</label>
+												<input type="text" name="entrance_from" id="entrance_from">
+											</div>
+											<div class="submit_btn">
+												<button type="button">Готово</button>
+											</div>
+										</form>
+									</div>
+									<input id="input_from" type="text" name="address_from" placeholder="откуда забрать?" class="typeahead">
+									<div class="options"><span class="icon terminal"></span>
+										<ul id="terminals" style="display: none;">
+											<li><a>Павелецкий вокзал</a>
+											</li>
+											<li><a>Ярославский вокзал</a>
+											</li>
+											<li><a>Ленинградский вокзал</a>
+											</li>
+											<li><a>Савёловский вокзал</a>
+											</li>
+											<li><a>Казанский вокзал</a>
+											</li>
+										</ul><span class="icon airport"></span>
+										<ul id="airports" style="display: none;">
+											<li><a>Внуково</a>
+											</li>
+											<li><a>Домодедово</a>
+											</li>
+											<li><a>Шереметьево</a>
+											</li>
+										</ul>
+									</div>
+									<div style="display: none;" class="input__error"></div>
+								</div>
+							</div>
+							<div id="to" class="input">
+								<div class="input__to typeahead-holder"><span class="destination"></span><span style="display: none;" class="clear__btn"></span>
+									<div style="display: none;" class="address_inputs">
+										<form id="exact_adress_to">
+											<div class="option">
+												<label for="house_to">дом</label>
+												<input type="text" name="house_from" id="house_from">
+											</div>
+											<div class="option">
+												<label for="building_to">строение</label>
+												<input type="text" name="building_from" id="building_from">
+											</div>
+											<div class="option">
+												<label for="case_to">корпус</label>
+												<input type="text" name="case_from" id="case_from">
+											</div>
+											<div class="option">
+												<label for="entrance_to">подъезд</label>
+												<input type="text" name="entrance_from" id="entrance_from">
+											</div>
+											<div class="submit_btn">
+												<button type="button">Готово</button>
+											</div>
+										</form>
+									</div>
+									<input id="input_to" type="text" name="address_to" placeholder="куда доставить?" class="typeahead">
+									<div class="options"><span class="icon terminal"></span>
+										<ul id="terminals" style="display: none;">
+											<li><a>Павелецкий вокзал</a>
+											</li>
+											<li><a>Ярославский вокзал</a>
+											</li>
+											<li><a>Ленинградский вокзал</a>
+											</li>
+											<li><a>Савёловский вокзал</a>
+											</li>
+											<li><a>Казанский вокзал</a>
+											</li>
+										</ul><span class="icon airport"></span>
+										<ul id="airports" style="display: none;">
+											<li><a>Внуково</a>
+											</li>
+											<li><a>Домодедово</a>
+											</li>
+											<li><a>Шереметьево</a>
+											</li>
+										</ul>
+									</div>
+									<div style="display: none;" class="input__error"></div>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="time"><span class="when">когда:</span>
+					<div class="inputs">
+						<div class="radio">
+							<input type="radio" name="time" id="soon" value="soon" checked>
+							<label for="soon">ближайшее время</label>
+						</div>
+						<div class="radio">
+							<input type="radio" name="time" id="exact" value="exact">
+							<label for="exact"><span class="exact">сегодня</span><span class="caret"></span><span>в</span>
+								<div class="clock">
+									<input type="text" name="clock__hrs" placeholder="9" onfocus="this.placeholder = ''" onblur="this.placeholder = '9'" class="clock__hrs"><span class="clock__sep">:</span>
+									<input type="text" name="clock__mins" placeholder="14" onfocus="this.placeholder = ''" onblur="this.placeholder = '14'" class="clock__mins">
+								</div>
+							</label>
+						</div>
+						<div class="comment"><span>Добавить комментарий</span>
+							<div style="display: none;" class="comment__form">
+								<textarea>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nulla libero, convallis elementum neque ut, egestas euismod risus. Sed fringilla neque sed leo fermentum dapibus. Nam sit amet ante sed orci elementum vestibulum. Donec venenatis
+									pulvinar purus, a aliquet dolor pellentesque eu. Praesent sem tortor, vehicula in tristique sed, malesuada id est. Nullam non quam facilisis, ornare metus eget, vestibulum leo. Vestibulum in euismod mi. Nullam tristique felis sed imperdiet lacinia.
+									Phasellus imperdiet imperdiet elit et ultrices. Sed condimentum bibendum porta. Morbi tristique eleifend lacus, ultrices faucibus sem pretium id. Phasellus eget ultrices dolor, nec suscipit orci. Nulla facilisi. In tempor ut dui id gravida. Nullam
+									quis nulla at ligula tempus pretium. Nullam facilisis molestie convallis. Pellentesque mattis mi ac leo dictum vehicula. Aliquam non dictum metus. Quisque justo eros, aliquam vestibulum vulputate at, lacinia et felis. Vestibulum in justo ac risus
+									auctor porttitor aliquam at eros. Morbi elementum scelerisque egestas. Morbi bibendum, lacus a dapibus vehicula, dolor tortor placerat mi, vel tristique nulla lectus sed eros. Cras commodo et lacus sed sagittis.</textarea>
+								<div class="comment__btn">
+									<button type="button">Готово</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="order__btn">
+					<button type="button">Заказать</button>
+				</div>
+			</div>
+			<div class="benefits">
+				<h1 class="h1">Преимущества:</h1>
+				<p class="mercedes"><span>Только Mercedes-Benz<br/>E-class</span>
+				</p>
+				<p class="cards"><span>Доступна удобная<br/>оплата картами</span>
+				</p>
+				<p class="umbrella"><span>В машине свежая пресса,<br/>зонт на случай дождя</span>
+				</p>
+				<p class="wifi"><span>Бесплатный Wi-Fi</span>
+				</p>
+				<p class="polite"><span>Профессиональные<br/>вежливые водители</span>
+				</p>
+			</div>
+		</div>
+		</div>
+		<div class="rates">
+			<div class="container">
+				<div class="rates__title">
+					<h1 class="h1">Тарифы</h1>
+				</div>
+				<div class="rates__col__one">
+					<div class="name"><span class="gray one">Основной:</span><span class="gray next">далее:</span>
+					</div>
+					<div class="price"><strong>750 руб / 30 мин</strong><strong>25 руб / мин</strong>
+					</div>
+				</div>
+				<div class="rates__col__two">
+					<div class="name"><span class="gray airport">Трансфер в/из аэропорта:</span><span class="gray round">Трансфер туда-обратно:</span>
+					</div>
+					<div class="price"><strong>2500 руб</strong><strong>4500 руб</strong>
+					</div>
+				</div>
+				<div class="rates__details"><span class="details">Узнать подробности</span>
+				</div>
+			</div>
+		</div>
+		<div class="menu">
+			<div class="container">
+				<ul>
+					<li><a href="#">Основной сайт</a>
+					</li>
+					<li><a href="#">Дополнительные услуги</a>
+					</li>
+					<li><a href="#">Корпоративным клиентам</a>
+					</li>
+					<li><a href="#">Водителям</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container">
+			<div class="footer">
+				<div class="logo"></div>
+				<div class="checkers"></div>
+				<div class="phone">
+					<h2 class="h2 gray"><a href="tel:+74959888888">+7 (495) 9-888-888</a></h2>
+				</div>
+				<div class="checkers"></div>
+				<div class="copyrights"><span class="sign">©</span><em class="text"><span>2012-2014</span><span>ООО «Командир»</span><span>Все права защищены</span></em>
+				</div>
+			</div>
+		</div>
+		<script src="scripts/libs/jquery-2.1.1.min.js"></script>
+		<script src="scripts/libs/fancySelect.js"></script>
+		<script src="scripts/libs/jquery.kladr.js"></script>
+		<script src="scripts/main.js"></script>
+	</body>
+</html>
