@@ -227,7 +227,7 @@
     "error_modal_flood_description": "Вы выполняете слишком много действий. Попробуйте повторить позже.",
     "error_modal_internal_description": "Внутренняя ошибка сервера. Попробуйте повторить позже.",
     "error_modal_tech_details": "Технические подробности:",
-    "error_modal_multiple_open_tabs": "Пожалуйста, закройте другие вкладки с приложением Телеграма.",
+    "error_modal_multiple_open_tabs": "Пожалуйста, закройте другие вкладки с Телеграмом.",
     "head_telegram": "Телеграм",
     "head_new_group": "Новая группа",
     "head_new_contact": "Новый контакт",

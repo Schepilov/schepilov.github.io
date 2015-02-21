@@ -49,13 +49,7 @@ Config.Navigator = {
 Config.I18n = {
   locale: 'ru-ru',
   supported: [
-    "en-us"
-    ,"es-es"
-    ,"de-de"
-    ,"it-it"
-    ,"nl-nl"
-    ,"pt-br"
-    ,"ru-ru"
+    "ru-ru"
   ], // To be copied to package.json
   languages: {
     'en-us': 'English',
