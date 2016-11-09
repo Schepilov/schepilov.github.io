@@ -1,10 +1,10 @@
 <?php
 
 $fb_graph = "https://graph.facebook.com/v2.8/";
-$fb_video =  "10155482188709972";
+$fb_video =  "224527464627810";
 $fb_query = "reactions.type(LOVE).limit(0).summary(total_count).as(reactions_love)%2Creactions.type(LIKE).limit(0).summary(total_count).as(reactions_like)";
 
-$fb_token = "1807617999450148|e0035c4cda05dba317fad5442ccbd56a";
+$fb_token = "1780849518854846|392a4c723805dd56fb64deff170daa94";
 
 $result = file_get_contents($fb_graph . "?ids=" . $fb_video . "&fields=" . $fb_query . "&access_token=" . $fb_token);
 
