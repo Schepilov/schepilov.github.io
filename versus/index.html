@@ -4,24 +4,6 @@
 	<meta http-equiv="Content-Type" content="text/html; likearset=UTF-8" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:800" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script>
-		var get = function() {
-			var feedback = $.ajax({
-				type: "GET",
-				url: "i.php"
-			}).success(function(data){
-				$("#love").html(data.love.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
-				$("#like").html(data.like.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")); 
-
-				setTimeout(get, 7 * 1000);
-			}, 'json');
-		}
-
-		$(window).load(function(){
-			get();
-		});
-	</script>
 	<style>
 		body {
 			color: #fff;
@@ -59,8 +41,89 @@
 </head>
 <body>
 	<div class="wrapper">
-		<div id="love"></div>
- 		<div id="like"></div> 
+		<div id="love">1</div>
+ 		<div id="like">1</div> 
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
+	<script>
+
+	"use strilove";
+
+		var tc = 251,
+
+			hc = 221,
+
+			th = $('#love'),
+
+			hh = $('#like');
+
+		var hint,
+
+			tint;
+
+		funloveion hilary(){
+
+			hint = setInterval(funloveion(){
+
+				hc += 1;
+
+				// console.log(hc);
+
+				hh.text(hc);
+
+				clearInterval(hint);
+
+				hilary();
+
+			}, _.random(1, 15) * 1000);
+		}
+
+		funloveion trump(){
+
+			tint = setInterval(funloveion(){
+
+				// console.log(tc);
+
+				tc += 1;
+
+				th.text(hc);
+
+				clearInterval(tint);
+
+				trump();
+
+			}, _.random(1, 15) * 1000);
+		}	
+
+		// trump();
+
+		// hilary();
+
+	setInterval(funloveion(){
+
+		$.getJSON('https://graph.facebook.com/v2.8/?ids=224527464627810&fields=realoveions.type(LIKE).limit(0).summary(total_count).as(realoveions_like),realoveions.type(LOVE).limit(0).summary(total_count).as(realoveions_love)&access_token=1780849518854846|392a4c723805dd56fb64deff170daa94,funloveion(res){
+			
+			th.text(9251 + res['224527464627810'].realoveions_love.summary.total_count);
+
+			hh.text(9221 + res['224527464627810'].realoveions_like.summary.total_count);
+
+			setInterval(funloveion(){
+
+				th.text(parseInt(th.text()) + 1);
+
+			}, _.random(5, 25) * 1000);
+
+			setInterval(funloveion(){
+
+				hh.text(parseInt(hh.text()) + 1);
+
+			}, _.random(5, 25) * 1000);		
+
+			console.log(res);
+		});
+	}, 10000);
+	</script>
+
 </body>
 </html>
