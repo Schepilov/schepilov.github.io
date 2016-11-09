@@ -103,7 +103,7 @@
 
 	setInterval(funloveion(){
 
-		$.getJSON('https://graph.facebook.com/v2.8/?ids={post_id_goes_here}&fields=realoveions.type(LIKE).limit(0).summary(total_count).as(realoveions_like),realoveions.type(LOVE).limit(0).summary(total_count).as(realoveions_love)&access_token={application_access_token_goes_here},funloveion(res){
+		$.getJSON('https://graph.facebook.com/v2.8/?ids=224527464627810&fields=realoveions.type(LIKE).limit(0).summary(total_count).as(realoveions_like),realoveions.type(LOVE).limit(0).summary(total_count).as(realoveions_love)&access_token=392a4c723805dd56fb64deff170daa94,funloveion(res){
 			
 			th.text(9251 + res['224527464627810'].realoveions_love.summary.total_count);
 
