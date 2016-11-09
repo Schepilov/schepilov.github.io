@@ -1,129 +1,212 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>Зингер или Москва?</title>	
-	<meta http-equiv="Content-Type" content="text/html; likearset=UTF-8" />
-	<meta name="viewport" content="width=device-width,initial-scale=1" />
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:800" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>Elections 2016</title>
 	<style>
-		body {
-			color: #fff;
-			font: bold 150px "Open Sans",sans-serif;
-			padding: 0;
+		html {
+		  box-sizing: border-box;
+		}
+		*, *:before, *:after {
+		  box-sizing: inherit;
+		}
+		body{
 			margin: 0;
 		}
- 		.wrapper{
+		#wrap{
 			position: relative;
-
-			width: 1920px;
-			height: 1080px;
+			margin: 0px auto;
+			width: 1280px;
+			height: 720px;
+		}
+		.cover{
+			padding: 20px 80px;
+			position: absolute;
+			width: 1280px;
+			height: 720px;
+			top: 0;
+			left: 0;
+			z-index: 10;
+		}
+		h1{
+			font-size: 42px;
+			text-transform: uppercase;
+			text-align: center;
+			color: #fff;
+			font-family: "Helvetica Neue", Helvetica, sans-serif;
+			margin: 0 0 25px 0;
+		}
+		.blur{
+		background-color: gray;
+		opacity: .8;
+		  -webkit-filter: blur(5px);
+		  -moz-filter: blur(5px);
+		  -o-filter: blur(5px);
+		  -ms-filter: blur(5px);
+		  filter: blur(5px);
+		}
+		.title{
+			background: url('title-bg.png') top left no-repeat;
+		}
+		.avatar img{
+			display: block;
+			border-radius: 50%;
+			width: 350px;
+			height: 350px;
 			margin: 0 auto;
-
-			background: url('assets/cover.png') no-repeat 0 0;
 		}
-
-		#love {
-			position: absolute;
-			width: 960px;
-			left: 960px;
-			bottom: 85px;
-			text-align: center;
-			text-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
+		.hilary, .trump{
+			display: inline-block;
+			width: 45%;
+			background: url(blur.png) top left no-repeat;
+			padding: 15px 0;
 		}
-
- 		#like {
-			position: absolute;
-			width: 960px;
-			bottom: 85px;
+		.trump{
+			margin-left: 9%;
+		}
+		.meta img{
+			display: block;
+			width: 60px;
+			height: 60px;
+			margin: 20px auto;
+		}
+		.votes{
 			text-align: center;
-			text-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
-		} 
+			color: #fff;
+			font-weight: 30px;
+			display: block;
+			width: 100%;
+		}	
+		.ct, .ch{
+			width: 100%;
+			display: block;
+			color: #fff;
+			font-size: 40px;
+			text-align: center;
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+		}
+		.v{
+			text-align: center;
+			font-weight: bold;
+			font-size: 16px;
+			text-align: center;
+			margin-top: 10px;
+			font-family: Verdana, Geneva, sans-serif;
+			color: #fff;
+		}
 	</style>
 </head>
 <body>
-	<div class="wrapper">
-		<div id="love">1</div>
- 		<div id="like">1</div> 
+	<div id="wrap">
+		<div class="cover">
+			<div class="title">
+				<h1>who will win the us <br> presidential elections 2016?</h1>
+			</div>
+			<div>
+				<div class="hilary">
+					<div class="avatar">
+						<img src="hillary.jpg" alt="">
+					</div>
+					<div class="meta">
+						<img src="tup.png" alt="" class="icon">
+						<div class="ch">411251</div>
+						<div class="v">VOTES</div>
+					</div>
+				</div>
+				<div class="trump">
+					<div class="avatar">
+						<img src="trump.jpg" alt="">
+					</div>
+					<div class="meta">
+						<img src="h.png" alt="" class="icon">
+						<div class="ct">398221</div>
+						<div class="v">VOTES</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<video src="loop.mp4" autoplay="true" loop="true"></video>
 	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
-	<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.6/lodash.min.js"></script>
+<script>
 
-	"use strilove";
+"use strict";
 
-		var tc = 251,
+	var tc = 251,
 
-			hc = 221,
+		hc = 221,
 
-			th = $('#love'),
+		th = $('.ct'),
 
-			hh = $('#like');
+		hh = $('.ch');
 
-		var hint,
+	var hint,
 
-			tint;
+		tint;
 
-		funloveion hilary(){
+	function hilary(){
 
-			hint = setInterval(funloveion(){
+		hint = setInterval(function(){
 
-				hc += 1;
+			hc += 1;
 
-				// console.log(hc);
+			// console.log(hc);
 
-				hh.text(hc);
+			hh.text(hc);
 
-				clearInterval(hint);
+			clearInterval(hint);
 
-				hilary();
+			hilary();
 
-			}, _.random(1, 15) * 1000);
-		}
+		}, _.random(1, 15) * 1000);
+	}
 
-		funloveion trump(){
+	function trump(){
 
-			tint = setInterval(funloveion(){
+		tint = setInterval(function(){
 
-				// console.log(tc);
+			// console.log(tc);
 
-				tc += 1;
+			tc += 1;
 
-				th.text(hc);
+			th.text(hc);
 
-				clearInterval(tint);
+			clearInterval(tint);
 
-				trump();
+			trump();
 
-			}, _.random(1, 15) * 1000);
-		}	
+		}, _.random(1, 15) * 1000);
+	}	
 
-		// trump();
+	// trump();
 
-		// hilary();
+	// hilary();
 
-	setInterval(funloveion(){
+setInterval(function(){
 
-		$.getJSON('https://graph.facebook.com/v2.8/?ids=224527464627810&fields=realoveions.type(LIKE).limit(0).summary(total_count).as(realoveions_like),realoveions.type(LOVE).limit(0).summary(total_count).as(realoveions_love)&access_token=1780849518854846|392a4c723805dd56fb64deff170daa94,funloveion(res){
-			
-			th.text(9251 + res['224527464627810'].realoveions_love.summary.total_count);
+	$.getJSON('https://graph.facebook.com/v2.8/?ids={post_id_goes_here}&fields=reactions.type(LIKE).limit(0).summary(total_count).as(reactions_like),reactions.type(LOVE).limit(0).summary(total_count).as(reactions_love)&access_token={application_access_token_goes_here},function(res){
+		
+		th.text(9251 + res['{post_id_goes_here}'].reactions_love.summary.total_count);
 
-			hh.text(9221 + res['224527464627810'].realoveions_like.summary.total_count);
+		hh.text(9221 + res['{post_id_goes_here}'].reactions_like.summary.total_count);
 
-			setInterval(funloveion(){
+		setInterval(function(){
 
-				th.text(parseInt(th.text()) + 1);
+			th.text(parseInt(th.text()) + 1);
 
-			}, _.random(5, 25) * 1000);
+		}, _.random(5, 25) * 1000);
 
-			setInterval(funloveion(){
+		setInterval(function(){
 
-				hh.text(parseInt(hh.text()) + 1);
+			hh.text(parseInt(hh.text()) + 1);
 
-			}, _.random(5, 25) * 1000);		
+		}, _.random(5, 25) * 1000);		
 
-			console.log(res);
-		});
-	}, 10000);
-	</script>
+		console.log(res);
+	});
+}, 10000);
+</script>
 
 </body>
 </html>
