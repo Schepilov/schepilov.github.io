@@ -1,0 +1,167 @@
+<div ng-controller="productDetailsController">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <a class="btn btn-lg btn-link" ui-sref="catalog.list">
+                <i class="fa fa-th-large"></i> Back to catalog
+            </a>
+        </div>
+    </div>
+    <div class="text-center loading-container" ng-show="!product">
+        <div class="rotation-container">
+            <div class="rotate-img"></div>
+        </div>
+    </div>
+    <div ng-if="product">
+        <div class="container-box">
+            <div class="row">
+                <div class="col-xs-12">
+                    <slick infinite="true" dots="true" arrows="true" autoplay="true" settings="view.slickConfig">
+                        <div class="slick-slide" style="width: 438px;" ng-repeat="slide in view.slides">
+                            <div class="image-container">
+                                <img class="middled centered" ng-src="{{slide}}" style="max-height: 100%; height: 100%">
+                            </div>
+                        </div>
+                    </slick>
+                </div>
+            </div>
+            <div class="container-tile">
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-4">
+                        <div class="thumbnail"><img logo="FINAL FANTASY XII THE ZODIAC AGE" variation="l" src="assets/images/logos/final-fantasy-xii-the-zodiac-age-l.png"></div>
+                    </div>
+                    <div class="col-lg-10 col-md-9 col-sm-6 hidden-xs">
+                        <h2>
+                            {{product.data.name}}<br/>
+                            <small>{{product.data._Publisher}}</small>
+                        </h2>
+                        <div class="row padding-top-md">
+                            <div class="col-lg-3 col-sm-6 form-inline">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">Buy</button>
+                            </div>
+                            <div class="col-lg-9 col-sm-6">
+                                <small class="text-muted">
+                                    <s>{{product.data.value | epayCurrency}}</s>
+                                </small>
+                                <div class="padding-top-xs">
+                                    <span class="label label-lg label-danger">
+                                        {{product.data.value | epayCurrency}} <i epay-currency-icon></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-8 hidden-lg hidden-md hidden-sm">
+                        <h3>
+                            {{product.data.name}}<br/>
+                            <small>{{product.data._Publisher}}</small>
+                        </h3>
+                        <span class="label label-md label-danger">
+                            {{product.data.value | epayCurrency}} <i epay-currency-icon></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;
+                        <small class="text-muted">
+                            <s>{{product.data.value | epayCurrency}}</s>
+                        </small>
+                    </div>
+                </div>
+                <div class="hidden-xs" ng-if="product.text">
+                    <hr/>
+                    <product-text text="product.text" max-length="300"></product-text>
+                </div>
+                <div class="hidden-lg hidden-md hidden-sm margin-top-xs">
+                    <button type="submit" class="btn btn-primary btn-block">Buy</button><p/>
+                    <product-text text="product.text" ng-if="product.text" max-length="200"></product-text>
+                </div>
+                <div class="hidden-xs">
+                    <hr/>
+                    <div class="row lead" ng-repeat="attribute in product.attributes">
+                        <div class="col-lg-2 col-md-3 col-xs-4 text-muted">
+                            {{attribute.label}}:
+                        </div>
+                        <div class="col-lg-10 col-md-9 col-xs-8">
+                            {{attribute.value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-box margin-top-lg hidden-lg hidden-md hidden-sm">
+            <div class="container-tile">
+                <h3>Products Properties</h3>
+                <div class="row lead" ng-repeat="attribute in product.attributes">
+                    <div class="col-xs-12 text-muted">
+                        {{attribute.label}}:
+                    </div>
+                    <div class="col-xs-12">
+                        {{attribute.value}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-box margin-top-lg">
+            <div class="container-tile">
+                <h3>Media Links</h3>
+                <div class="row horizontal-scroll">
+                    <div class="horizontal-scroll-card col-lg-4 col-sm-6 col-xs-8" ng-repeat="slide in view.slides">
+                        <div class="margin-bottom-xs">
+                            <div class="product-tile">
+                                <a ui-sref="catalog.list">
+                                    <div class="thumbnail">
+                                        <img ng-src="{{slide}}" />
+                                    </div>
+                                    <p class="lead">Media {{$index + 1}}</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-box margin-top-lg">
+            <div class="container-tile">
+                <h3>Product Links</h3>
+                <div class="row horizontal-scroll" ng-if="product.related">
+                    <div class="horizontal-scroll-card col-lg-2 col-md-3 col-sm-4 col-xs-5" ng-repeat="product in product.related">
+                        <div class="margin-bottom-xs">
+                            <div class="product-tile">
+                                <a ui-sref="catalog.product({id: product.id})">
+                                    <div class="thumbnail">
+                                        <img logo="{{product.name}}" variation="l" />
+                                    </div>
+                                    {{product.displayName}}<br/>
+                                    <strong>{{product.value | epayCurrency}}</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-box margin-top-lg" container-max-height="200" container-class="container-tile">
+            <div class="container-tile">
+                <h3>Product Texts</h3>
+                <div class="row" ng-if="product.assets">
+                    <div class="col-md-6 col-sm-12" ng-repeat="asset in product.assets | filter: {type: 'TEXT'}">
+                        <div class="margin-bottom-xs">
+                            <h4>{{asset.name}}</h4>
+                            <p style="white-space: pre-wrap;">{{asset.resourceItems[0].content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden-xs">
+                <hr/>
+                <div class="text-center margin-bottom-xs">
+                    <a class="btn btn-lg btn-link">
+                        Show full text
+                    </a>
+                </div>
+            </div>
+            <div class="container-tile-xs hidden-lg hidden-md hidden-sm margin-bottom-xs">
+                <a class="link">
+                    Show full text
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

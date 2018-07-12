@@ -1,0 +1,1 @@
+define(["directives/main","directives/logo","directives/imageResource"]);

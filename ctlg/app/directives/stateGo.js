@@ -1,0 +1,1 @@
+app.directive("stateGo",["$state",function(a){return{restrict:"A",priority:10,link:function(b,c,d){var e=d.stateGo;a.go(e)}}}]);

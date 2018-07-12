@@ -1,0 +1,1 @@
+app.directive("logo",["$rootScope",function(a){return{restrict:"A",priority:10,link:function(a,b,c){var d=c.logo.replace(/\s+/g,"-").toLowerCase(),e=c.variation||"";switch(e){case"l":220}var f=function(a){return"assets/images/logos/"+a+"-"+e+".png"};c.$set("src",f(d)),b.bind("error",function(){c.src!==c.errSrc&&c.$set("src",f("noLogo"))})}}}]);

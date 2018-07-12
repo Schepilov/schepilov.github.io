@@ -1,0 +1,1 @@
+var localePath=window.navigator.userLanguage||window.navigator.language;localePath=localePath?localePath.toLowerCase():"error-no-browser-locale-set",require(["app","appSettings"],function(a){require(["appControllers","appDirectives","appFilters","appServices"],function(){angular.bootstrap(document,["app"])})});

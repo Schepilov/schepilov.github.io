@@ -1,0 +1,1 @@
+app.constant("transactionBitFields",{transaction:{refundDatePassed:1,hostDisabledRefund:2,cardRedeemed:4}});

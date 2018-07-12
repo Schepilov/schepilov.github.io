@@ -1,0 +1,1 @@
+app.directive("scrollTop",[function(){return{restrict:"A",link:function(a,b,c){var d=b.scrollTop(),e=b.height();$(window).on("scroll.scrollTop",function(){var a=$(window).scrollTop(),c=parseInt([.8*a],10)+d+"px";b.css({top:c,opacity:[[1.2*e]-[a-d]]/100})}),a.$on("$destroy",function(){$(window).off("scroll.scrollTop")})}}}]);
