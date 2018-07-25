@@ -1,0 +1,2 @@
+webpackJsonp([1],{51:function(e,n,t){"use strict";function o(){return{translation:{oops:"Oops!",all_gone_do_anything:"Something went wrong. Please try again."}}}Object.defineProperty(n,"__esModule",{value:!0}),n.default=o}});
+//# sourceMappingURL=1.8367b31e.chunk.js.map
