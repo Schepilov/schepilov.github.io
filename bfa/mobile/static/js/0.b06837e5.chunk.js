@@ -1,2 +1,0 @@
-webpackJsonp([0],{51:function(e,n,t){"use strict";function o(){return{translation:{oops:"\u041e\u0439",all_gone_do_anything:"\u0412\u0441\u0435 \u0437\u043b\u0430\u043c\u0430\u043b\u043e\u0441\u044f, \u0441\u043f\u0440\u043e\u0431\u0443\u0439\u0442\u0435 \u0437\u043d\u043e\u0432\u0443"}}}Object.defineProperty(n,"__esModule",{value:!0}),n.default=o}});
-//# sourceMappingURL=0.b06837e5.chunk.js.map
