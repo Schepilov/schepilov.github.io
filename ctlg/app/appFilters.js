@@ -1,1 +1,0 @@
-define(["filters/epayCurrency","filters/propertyFilter","filters/booleanFilters","filters/stringManipulations"]);

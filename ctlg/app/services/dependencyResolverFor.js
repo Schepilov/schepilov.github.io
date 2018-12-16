@@ -1,1 +1,0 @@
-define([],function(){return function(a){return["$q","$rootScope",function(b,c){var d=b.defer();return require([a],function(){c.$apply(function(){d.resolve()})}),d.promise}]}});

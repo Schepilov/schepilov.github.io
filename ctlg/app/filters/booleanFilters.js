@@ -1,1 +1,0 @@
-app.filter("boolean",function(){return function(a){return a?"fa fa-check alert-success-text":"fa fa-times alert-danger-text"}}),app.filter("booleanClass",function(){return function(a,b){var c=a?"success":"danger";switch(b){case"block":return"alert-"+c;case"row":return c;default:return"alert-"+c+"-text"}}});

@@ -1,1 +1,0 @@
-define(["services/authenticationService","services/authorizationService","services/myHttpInterceptor","services/dataService"]);

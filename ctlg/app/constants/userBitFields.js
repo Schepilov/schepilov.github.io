@@ -1,1 +1,0 @@
-app.constant("userBitFields",{permissions:{},settings:{}});

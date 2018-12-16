@@ -1,1 +1,0 @@
-app.factory("paginationService",function(){var a={resultsPerPage:15,currentPage:1,pageCount:1,resultsCount:0,filter:function(a){var b=[],c=this.currentPage;if($.isNumeric(c)&&$.isNumeric(15)){var d=(parseInt(c)-1)*parseInt(15),e=d+parseInt(15);b=a.slice(d,e)}return b}};return{init:function(b){var c=_.clone(a);return _.isArray(b)&&(c.resultsCount=b.length),c}}});

@@ -1,1 +1,0 @@
-app.controller("503Controller",["$scope","$window",function(a,b){a.back=function(){b.history.back()}}]);
