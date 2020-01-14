@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>VK Music Redirect</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="bg"></div>
+<script type="text/javascript">
+    function findGetParameter(parameterName) {
+        var result = '',
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+
+    var protoUrl = "vk:\/\/vk.com\/" + findGetParameter('page');
+    window.location = protoUrl;
+
+    var sipleUrl = "https://vk.com/" + findGetParameter('post');
+
+    function setintr() {
+        window.location = sipleUrl;
+    }
+
+    setTimeout(setintr,2000);
+
+
+    </script>
+</body>
+</html>
