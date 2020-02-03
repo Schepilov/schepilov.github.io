@@ -21,7 +21,7 @@
         return result;
     }
 
-    var protoUrl = "vk:\/\/vk.com\/" + "findGetParameter('app')" + "#utm_source=" + "findGetParameter('source')" + "&utm_medium=" + "findGetParameter('medium')" + "&utm_content=" + "findGetParameter('content')";
+    var protoUrl = "vk:\/\/vk.com\/" + findGetParameter('app') + "#utm_source=" + findGetParameter('source') + "&utm_medium=" + findGetParameter('medium') + "&utm_content=" + findGetParameter('content');
     window.location = protoUrl;
 
     var sipleUrl = "https://vk.com/" + findGetParameter('post');
@@ -31,8 +31,6 @@
     }
 
     setTimeout(setintr,2000);
-
-
     </script>
 </body>
 </html>
