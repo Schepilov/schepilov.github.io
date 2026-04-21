@@ -127,8 +127,15 @@ body {
     -ms-user-select: none;     /* старый Edge */
 }
 
+html.is-locked,
 body.is-locked {
   overflow: hidden;
+}
+
+body.is-locked {
+  position: fixed;
+  inset: 0;
+  width: 100%;
 }
 
 :root, body {
