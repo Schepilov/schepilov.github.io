@@ -36,22 +36,25 @@
 
         <!-- Два детских полароида -->
         <div class="hero__childhood">
+          <div class="hero-polaroid hero-seq hero-seq-left">
+            <figure class="polaroid polaroid--tilt-left">
+              <img class="polaroid__photo"
+                   src="assets/images/sasha-child.png"
+                   alt="Саша в детстве">
+              <figcaption class="polaroid__caption"
+                          data-text="hero.captionSasha">это - Саша</figcaption>
+            </figure>
+          </div>
 
-          <figure class="polaroid polaroid--tilt-left hero-seq hero-seq-left">
-            <img class="polaroid__photo"
-                 src="assets/images/sasha-child.png"
-                 alt="Саша в детстве">
-            <figcaption class="polaroid__caption"
-                        data-text="hero.captionSasha">это - Саша</figcaption>
-          </figure>
-
-          <figure class="polaroid polaroid--tilt-right hero-seq hero-seq-right">
-            <img class="polaroid__photo"
-                 src="assets/images/ksusha-child.png"
-                 alt="Ксюша в детстве">
-            <figcaption class="polaroid__caption"
-                        data-text="hero.captionKsusha">а это - Ксюша</figcaption>
-          </figure>
+          <div class="hero-polaroid hero-seq hero-seq-right">
+            <figure class="polaroid polaroid--tilt-right">
+              <img class="polaroid__photo"
+                   src="assets/images/ksusha-child.png"
+                   alt="Ксюша в детстве">
+              <figcaption class="polaroid__caption"
+                          data-text="hero.captionKsusha">а это - Ксюша</figcaption>
+            </figure>
+          </div>
 
         </div>
 
@@ -67,7 +70,7 @@
         </div>
 
         <!-- Полароид пары -->
-        <div class="hero__couple hero-seq hero-seq-photo">
+        <div class="hero__couple hero-seq hero-seq-couple">
           <figure class="polaroid polaroid--tilt-small">
             <img class="polaroid__photo"
                  src="assets/images/couple-heart.png"
@@ -92,7 +95,7 @@
     </section>
 
     <!-- Разделитель -->
-        <div class="schedule__sep reveal js-sep-zags" aria-hidden="true">
+        <div class="schedule__sep js-sep-zags" aria-hidden="true">
           <img src="assets/icons/heart-3.svg" alt="" class="schedule__sep-heart">
         </div>
 
@@ -181,7 +184,7 @@
         </article>
 
         <!-- Разделитель -->
-        <div class="schedule__sep js-sep-zags reveal" aria-hidden="true">
+        <div class="schedule__sep js-sep-zags" aria-hidden="true">
           <img src="assets/icons/heart-3.svg" alt="" class="schedule__sep-heart">
         </div>
 
@@ -198,7 +201,7 @@
         </article>
 
         <!-- Разделитель: ужин → вечеринка (прячется, если гость не приглашён на вечеринку) -->
-        <div class="schedule__sep js-sep-party reveal" aria-hidden="true">
+        <div class="schedule__sep js-sep-party" aria-hidden="true">
           <img src="assets/icons/heart-3.svg" alt="" class="schedule__sep-heart">
         </div>
 
@@ -359,7 +362,7 @@
     </section>
 
     <!-- Разделитель -->
-        <div class="schedule__sep js-sep-zags reveal" aria-hidden="true">
+        <div class="schedule__sep js-sep-zags" aria-hidden="true">
           <img src="assets/icons/heart-3.svg" alt="" class="schedule__sep-heart">
         </div>
 
@@ -396,59 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const gate = document.getElementById('musicGate');
   let wasPlayingBeforeHidden = false;
 
-  const heroLeft = document.querySelector('.hero-seq-left');
-  const heroRight = document.querySelector('.hero-seq-right');
-  const greeting = document.querySelector('.greeting.hero-seq');
-  const couple = document.querySelector('.hero__couple.hero-seq');
-
-  let heroSequenceStarted = false;
-  let heroSequenceFinished = false;
-  let heroTimers = [];
-
-  const clearHeroTimers = () => {
-    heroTimers.forEach(id => clearTimeout(id));
-    heroTimers = [];
-  };
-
-  const showHeroStep = (el) => {
-    if (el) el.classList.add('is-visible');
-  };
-
-  const finishHeroSequenceNow = () => {
-    if (heroSequenceFinished) return;
-    clearHeroTimers();
-    showHeroStep(heroLeft);
-    showHeroStep(heroRight);
-    showHeroStep(greeting);
-    showHeroStep(couple);
-    heroSequenceFinished = true;
-  };
-
-  const revealHeroSequence = () => {
-    if (heroSequenceStarted) return;
-    heroSequenceStarted = true;
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      finishHeroSequenceNow();
-      return;
-    }
-
-    showHeroStep(heroLeft);
-
-    heroTimers.push(setTimeout(() => {
-      showHeroStep(heroRight);
-    }, 1000));
-
-    heroTimers.push(setTimeout(() => {
-      showHeroStep(greeting);
-    }, 2000));
-
-    heroTimers.push(setTimeout(() => {
-      showHeroStep(couple);
-      heroSequenceFinished = true;
-    }, 3000));
-  };
-
   gate.addEventListener('click', async () => {
     try {
       await audio.play();
@@ -456,11 +406,11 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Браузер не дал запустить звук:', e);
     }
 
+    document.body.classList.add('is-open');
     gate.classList.add('is-hidden');
-    revealHeroSequence();
 
     setTimeout(() => {
-      if (gate) gate.remove();
+      gate.remove();
     }, 600);
   });
 
@@ -477,8 +427,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const revealItems = Array.from(document.querySelectorAll('.reveal, .reveal-text'));
-
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -487,30 +435,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px 8% 0px'
+    threshold: 0.15
   });
 
-  revealItems.forEach(el => observer.observe(el));
-
-  let scrollTimer = null;
-
-  const handleUserScrollIntent = () => {
-    document.body.classList.add('is-scrolling-fast');
-
-    if (heroSequenceStarted && !heroSequenceFinished) {
-      finishHeroSequenceNow();
-    }
-
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      document.body.classList.remove('is-scrolling-fast');
-    }, 160);
-  };
-
-  window.addEventListener('wheel', handleUserScrollIntent, { passive: true });
-  window.addEventListener('touchmove', handleUserScrollIntent, { passive: true });
-  window.addEventListener('scroll', handleUserScrollIntent, { passive: true });
+  document.querySelectorAll('.reveal, .reveal-text').forEach(el => {
+    observer.observe(el);
+  });
 });
 </script>
 </body>
