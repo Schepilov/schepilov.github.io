@@ -17,17 +17,13 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <audio id="bg-music" loop preload="auto">
+    <source src="assets/audio/background.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="music-gate" id="musicGate">Нажмите, чтобы открыть приглашение</div>
 
   <main class="page">
-
-    <audio id="bg-music" loop preload="auto">
-  <source src="assets/audio/background.mp3" type="audio/mpeg">
-</audio>
-
-<div class="music-gate" id="musicGate">
-  Нажмите, чтобы открыть приглашение
-</div>
-
     <!-- ============================================
          ШАПКА: детские фото + приветствие + пара
          ============================================ -->
@@ -289,7 +285,7 @@
             </p>
 
             <!-- Карусель с примерами образов (фото временные, замени на свои) -->
-            <div class="carousel" role="region" aria-label="Примеры образов">
+            <!--<div class="carousel" role="region" aria-label="Примеры образов">
               <div class="carousel__track">
                 <div class="carousel__slide">
                   <img src="https://picsum.photos/seed/1048/320/427" alt="Пример образа" class="carousel__img">
@@ -304,7 +300,7 @@
                   <img src="https://picsum.photos/seed/1080/320/427" alt="Пример образа" class="carousel__img">
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
           </div>
@@ -370,20 +366,20 @@
       <div class="container">
         <h2 class="h1 reveal-text">Анкета для гостей</h2>
         <p class="lead reveal-text">Пожалуйста, заполните данные за себя и каждого,&nbsp;кто идёт&nbsp;с&nbsp;вами</p>
-        <form class="rsvp-form reveal" id="rsvp-form" novalidate>
-          <div class="rsvp-form__list" id="rsvp-guest-list"></div>
-          <button type="button" class="btn btn_secondary rsvp-form__add-btn" id="rsvp-add-btn">+ Добавить гостя</button>
-          <button type="submit" class="btn rsvp-form__submit">Отправить анкету</button>
+        <form class="rsvp-form" id="rsvp-form" novalidate>
+          <div class="rsvp-form__list reveal" id="rsvp-guest-list"></div>
+          <button type="button" class="btn btn_secondary rsvp-form__add-btn reveal" id="rsvp-add-btn">+ Добавить гостя</button>
+          <button type="submit" class="btn rsvp-form__submit reveal">Отправить анкету</button>
         </form>
       </div>
     </section>
 
   </main>
 
-  <footer class="footer reveal">
+  <footer class="footer">
     <div class="container">
-      <p class="footer__sign">с любовью, Саша&nbsp;и&nbsp;Ксюша</p>
-      <div class="footer__heart-wrap">
+      <p class="footer__sign reveal-text">с любовью, Саша&nbsp;и&nbsp;Ксюша</p>
+      <div class="footer__heart-wrap reveal">
         <img class="footer__photo"
              src="assets/images/couple-heart-footer.png"
              alt="Саша и Ксюша">
@@ -399,6 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const gate = document.getElementById('musicGate');
   let wasPlayingBeforeHidden = false;
 
+  document.body.classList.add('is-locked');
+
   gate.addEventListener('click', async () => {
     try {
       await audio.play();
@@ -406,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Браузер не дал запустить звук:', e);
     }
 
+    document.body.classList.remove('is-locked');
     document.body.classList.add('is-open');
     gate.classList.add('is-hidden');
 
