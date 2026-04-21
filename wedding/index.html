@@ -359,7 +359,7 @@
     </section>
 
     <!-- Разделитель -->
-        <div class="schedule__sep js-sep-zags" aria-hidden="true">
+        <div class="schedule__sep js-sep-zags reveal" aria-hidden="true">
           <img src="assets/icons/heart-3.svg" alt="" class="schedule__sep-heart">
         </div>
 
@@ -401,27 +401,52 @@ document.addEventListener('DOMContentLoaded', () => {
   const greeting = document.querySelector('.greeting.hero-seq');
   const couple = document.querySelector('.hero__couple.hero-seq');
 
+  let heroSequenceStarted = false;
+  let heroSequenceFinished = false;
+  let heroTimers = [];
+
+  const clearHeroTimers = () => {
+    heroTimers.forEach(id => clearTimeout(id));
+    heroTimers = [];
+  };
+
+  const showHeroStep = (el) => {
+    if (el) el.classList.add('is-visible');
+  };
+
+  const finishHeroSequenceNow = () => {
+    if (heroSequenceFinished) return;
+    clearHeroTimers();
+    showHeroStep(heroLeft);
+    showHeroStep(heroRight);
+    showHeroStep(greeting);
+    showHeroStep(couple);
+    heroSequenceFinished = true;
+  };
+
   const revealHeroSequence = () => {
+    if (heroSequenceStarted) return;
+    heroSequenceStarted = true;
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      [heroLeft, heroRight, greeting, couple].forEach(el => {
-        if (el) el.classList.add('is-visible');
-      });
+      finishHeroSequenceNow();
       return;
     }
 
-    if (heroLeft) heroLeft.classList.add('is-visible');
+    showHeroStep(heroLeft);
 
-    setTimeout(() => {
-      if (heroRight) heroRight.classList.add('is-visible');
-    }, 1000);
+    heroTimers.push(setTimeout(() => {
+      showHeroStep(heroRight);
+    }, 1000));
 
-    setTimeout(() => {
-      if (greeting) greeting.classList.add('is-visible');
-    }, 2000);
+    heroTimers.push(setTimeout(() => {
+      showHeroStep(greeting);
+    }, 2000));
 
-    setTimeout(() => {
-      if (couple) couple.classList.add('is-visible');
-    }, 3000);
+    heroTimers.push(setTimeout(() => {
+      showHeroStep(couple);
+      heroSequenceFinished = true;
+    }, 3000));
   };
 
   gate.addEventListener('click', async () => {
@@ -434,7 +459,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gate.classList.add('is-hidden');
     revealHeroSequence();
 
-    setTimeout(() => gate.remove(), 600);
+    setTimeout(() => {
+      if (gate) gate.remove();
+    }, 600);
   });
 
   document.addEventListener('visibilitychange', () => {
@@ -450,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const revealItems = document.querySelectorAll('.reveal, .reveal-text');
+  const revealItems = Array.from(document.querySelectorAll('.reveal, .reveal-text'));
 
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
@@ -460,11 +487,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, {
-    threshold: 0.12,
-    rootMargin: '0px 0px -8% 0px'
+    threshold: 0.08,
+    rootMargin: '0px 0px 8% 0px'
   });
 
   revealItems.forEach(el => observer.observe(el));
+
+  let scrollTimer = null;
+
+  const handleUserScrollIntent = () => {
+    document.body.classList.add('is-scrolling-fast');
+
+    if (heroSequenceStarted && !heroSequenceFinished) {
+      finishHeroSequenceNow();
+    }
+
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      document.body.classList.remove('is-scrolling-fast');
+    }, 160);
+  };
+
+  window.addEventListener('wheel', handleUserScrollIntent, { passive: true });
+  window.addEventListener('touchmove', handleUserScrollIntent, { passive: true });
+  window.addEventListener('scroll', handleUserScrollIntent, { passive: true });
 });
 </script>
 </body>

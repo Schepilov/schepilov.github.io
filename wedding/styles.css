@@ -329,8 +329,7 @@ img, svg {
 .schedule__tbd {
   font-family: var(--font-body);
   font-size: var(--fs-body);
-  color: var(--color-text);
-  opacity: 0.55;
+  color: #AC8F97;
   margin: 0 auto;
   max-width: var(--max-text);
 }
@@ -1264,7 +1263,6 @@ img, svg {
 .reveal,
 .reveal-text {
   opacity: 0;
-  pointer-events: none;
   will-change: opacity, transform;
 }
 
@@ -1286,7 +1284,15 @@ img, svg {
 .reveal-text.is-visible {
   opacity: 1;
   transform: none;
-  pointer-events: auto;
+}
+
+/* Когда человек активно скроллит — делаем анимации быстрее */
+body.is-scrolling-fast .reveal {
+  transition-duration: 0.45s;
+}
+
+body.is-scrolling-fast .reveal-text {
+  transition-duration: 0.38s;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1297,6 +1303,10 @@ img, svg {
     opacity: 1;
     transform: none;
     transition: none;
-    pointer-events: auto;
+  }
+
+  body.is-scrolling-fast .reveal,
+  body.is-scrolling-fast .reveal-text {
+    transition: none;
   }
 }
