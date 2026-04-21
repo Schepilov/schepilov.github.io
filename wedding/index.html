@@ -13,7 +13,17 @@
   <meta property="og:description" content="19 июля 2026, Московская область">
   <meta property="og:type"        content="website">
   <!-- og:image добавим позже, когда будет финальная превью-картинка -->
+  <script>
+  document.documentElement.classList.add('is-preloading');
 
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+</script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -261,7 +271,7 @@
               </li>
             </ul>
             <!-- Единый SVG: бокал + сердечко + звёздочка (офсеты из Figma) -->
-            <img src="src/Бокал.svg" alt="" class="program__glass-img">
+            <img src="assets/icons/glass.svg" alt="" class="program__glass-img">
           </div>
 
           <!-- Дресс-код — вечеринка -->
@@ -391,27 +401,52 @@
   <script src="script.js"></script>
   <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', () => {
+  function resetToTop() {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
+
+  resetToTop();
+
+  window.addEventListener('beforeunload', () => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+  });
+
+  window.addEventListener('pagehide', () => {
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  });
+
   const audio = document.getElementById('bg-music');
   const gate = document.getElementById('musicGate');
   let wasPlayingBeforeHidden = false;
-  let scrollY = 0;
 
   function lockScroll() {
-    scrollY = window.scrollY || window.pageYOffset || 0;
+    resetToTop();
     document.documentElement.classList.add('is-locked');
     document.body.classList.add('is-locked');
-    document.body.style.top = `-${scrollY}px`;
+    document.body.style.top = '0px';
   }
 
   function unlockScroll() {
     document.documentElement.classList.remove('is-locked');
     document.body.classList.remove('is-locked');
-    const y = scrollY;
     document.body.style.top = '';
-    window.scrollTo(0, y);
+    window.scrollTo(0, 0);
   }
 
   lockScroll();
+
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove('is-preloading');
+  });
 
   gate.addEventListener('click', async () => {
     try {
@@ -438,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
         wasPlayingBeforeHidden = false;
       }
     } else if (wasPlayingBeforeHidden) {
-        audio.play().catch(() => {});
+      audio.play().catch(() => {});
     }
   });
 

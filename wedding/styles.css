@@ -138,6 +138,11 @@ body.is-locked {
   width: 100%;
 }
 
+html,
+body {
+  scroll-behavior: auto;
+}
+
 :root, body {
     -ms-scrollbar-track-color: var(--color-accent);
     -ms-scrollbar-highlight-color: var(--color-accent);
