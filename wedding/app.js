@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Хаптик-пульс — общие константы для всех сердечек
+  // Хаптик-пульс для сердечек (только после первого жеста пользователя)
   const PULSE_PERIOD = 2400; // heartPulse длится 2.4s
   const PULSE_PEAK   = 1200; // пик анимации — 50% цикла
 
@@ -120,28 +120,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function makePulseTimer(onTick) {
     let timer = null;
-    function tick() {
-      onTick();
-      timer = setTimeout(tick, PULSE_PERIOD);
-    }
+    function tick() { onTick(); timer = setTimeout(tick, PULSE_PERIOD); }
     timer = setTimeout(tick, msToPeak());
-    return () => clearTimeout(timer); // возвращает stop-функцию
+    return () => clearTimeout(timer);
   }
-
-  // Пульс на заставке
-  let stopGatePulse = null;
 
   function showGate() {
     loaderDone = true;
     loader.classList.add('is-hidden');
     gate.classList.add('is-visible');
     setTimeout(() => loader.remove(), 600);
-    stopGatePulse = makePulseTimer(() => window._haptics?.trigger([28]));
+    // Gate pulse намеренно не запускаем: браузеры блокируют
+    // вибрацию и Web Audio без предшествующего жеста пользователя.
   }
 
   // Клик по заставке — открываем приглашение
   gate.addEventListener('click', async () => {
-    stopGatePulse?.();
+    // Первый хаптик — синхронно внутри жеста.
+    // Это разблокирует AudioContext на iOS и активирует sticky
+    // user activation на Android для всех последующих вызовов.
+    window._haptics?.trigger([35]); // Саша (анимация стартует через 100ms — разница незаметна)
+
     try { await audio.play(); } catch (e) { /* автовоспроизведение может быть заблокировано */ }
     unlockScroll();
     document.body.classList.add('is-open');
@@ -149,10 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
     gate.classList.add('is-hidden');
     setTimeout(() => gate.remove(), 600);
 
-    // Хаптик при появлении hero-элементов
-    setTimeout(() => window._haptics?.trigger([35]),  100);  // Саша
-    setTimeout(() => window._haptics?.trigger([35]), 1000);  // Ксюша
-    setTimeout(() => window._haptics?.trigger([22]), 1900);  // Узнали?
+    // Ксюша и «Узнали?» — AudioContext уже разблокирован, работают из setTimeout
+    setTimeout(() => window._haptics?.trigger([35]),  900); // Ксюша
+    setTimeout(() => window._haptics?.trigger([22]), 1800); // Узнали?
   });
 
   // Пауза музыки при скрытии вкладки
