@@ -108,21 +108,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Хаптик-пульс — общие константы для всех сердечек
+  const PULSE_PERIOD = 2400; // heartPulse длится 2.4s
+  const PULSE_PEAK   = 1200; // пик анимации — 50% цикла
+
+  function msToPeak() {
+    const phase = performance.now() % PULSE_PERIOD;
+    const delta = (PULSE_PEAK - phase + PULSE_PERIOD) % PULSE_PERIOD;
+    return delta || PULSE_PERIOD;
+  }
+
+  function makePulseTimer(onTick) {
+    let timer = null;
+    function tick() {
+      onTick();
+      timer = setTimeout(tick, PULSE_PERIOD);
+    }
+    timer = setTimeout(tick, msToPeak());
+    return () => clearTimeout(timer); // возвращает stop-функцию
+  }
+
+  // Пульс на заставке
+  let stopGatePulse = null;
+
   function showGate() {
     loaderDone = true;
     loader.classList.add('is-hidden');
     gate.classList.add('is-visible');
     setTimeout(() => loader.remove(), 600);
+    stopGatePulse = makePulseTimer(() => window._haptics?.trigger([28]));
   }
 
   // Клик по заставке — открываем приглашение
   gate.addEventListener('click', async () => {
+    stopGatePulse?.();
     try { await audio.play(); } catch (e) { /* автовоспроизведение может быть заблокировано */ }
     unlockScroll();
     document.body.classList.add('is-open');
     gate.classList.remove('is-visible');
     gate.classList.add('is-hidden');
     setTimeout(() => gate.remove(), 600);
+
+    // Хаптик при появлении hero-элементов
+    setTimeout(() => window._haptics?.trigger([35]),  100);  // Саша
+    setTimeout(() => window._haptics?.trigger([35]), 1000);  // Ксюша
+    setTimeout(() => window._haptics?.trigger([22]), 1900);  // Узнали?
   });
 
   // Пауза музыки при скрытии вкладки
@@ -181,34 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Хаптик-пульс синхронно с анимацией сердечка в футере
   const footerPhoto = document.querySelector('.footer__photo');
   if (footerPhoto) {
-    const PERIOD      = 2400; // heartPulse длится 2.4s
-    const PEAK_OFFSET = 1200; // пик анимации — 50% цикла = 1200ms
-
-    let heartTimer = null;
-
-    function msToNextPeak() {
-      const phase = performance.now() % PERIOD;
-      const delta = (PEAK_OFFSET - phase + PERIOD) % PERIOD;
-      return delta || PERIOD;
-    }
-
-    function startHeartbeat() {
-      function tick() {
-        window._haptics?.trigger([28]);
-        heartTimer = setTimeout(tick, PERIOD);
-      }
-      heartTimer = setTimeout(tick, msToNextPeak());
-    }
-
-    function stopHeartbeat() {
-      clearTimeout(heartTimer);
-      heartTimer = null;
-    }
-
+    let stopFooterPulse = null;
     new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) startHeartbeat();
-        else stopHeartbeat();
+        if (entry.isIntersecting) {
+          stopFooterPulse = makePulseTimer(() => window._haptics?.trigger([28]));
+        } else {
+          stopFooterPulse?.();
+          stopFooterPulse = null;
+        }
       });
     }, { threshold: 0.5 }).observe(footerPhoto);
   }
