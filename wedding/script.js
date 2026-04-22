@@ -419,8 +419,25 @@
           window._haptics?.trigger('error');
           var first = form.querySelector('.rsvp-error');
           if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          window._haptics?.trigger('success');
+          var section = document.getElementById('rsvp');
+          if (section) {
+            section.classList.add('rsvp--done');
+            // Прячем разделитель-сердечко перед секцией
+            var prevSep = section.previousElementSibling;
+            if (prevSep && prevSep.classList.contains('schedule__sep')) {
+              prevSep.style.display = 'none';
+            }
+          }
+          var confirm = document.getElementById('rsvp-confirm');
+          if (confirm) {
+            confirm.hidden = false;
+            setTimeout(function () {
+              confirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
+          }
         }
-        // else: здесь отправка данных
       });
     }
   }

@@ -1035,6 +1035,66 @@ a, button {
 
 .party-section-wrap[hidden] { display: none; }
 
+/* Подтверждение отправки анкеты */
+
+/* Скрываем заголовок секции, подпись и содержимое формы */
+.rsvp--done .container > *:not(.rsvp-form),
+.rsvp--done .rsvp-form > *:not(.rsvp-confirm) {
+  display: none;
+}
+
+.rsvp-confirm[hidden] { display: none; }
+
+.rsvp-confirm {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg) var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  animation: rsvpConfirmIn 0.7s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.rsvp-confirm__heart {
+  width: 72px;
+  height: 78px;
+  -webkit-mask-image: url('assets/icons/heart-3.svg');
+          mask-image: url('assets/icons/heart-3.svg');
+  -webkit-mask-size: 72px 78px;
+          mask-size: 72px 78px;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  background: var(--color-accent);
+  animation: heartPulse 2.4s ease-in-out infinite;
+}
+
+.rsvp-confirm__title {
+  font-family: var(--font-heading);
+  font-weight: 200;
+  font-size: var(--fs-heading);
+  color: var(--color-accent);
+  margin: 0;
+  text-align: center;
+  line-height: 0.75;
+}
+
+.rsvp-confirm__text {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@keyframes rsvpConfirmIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* Ошибки валидации */
 .rsvp-error {
   font-family: var(--font-body);
