@@ -67,7 +67,7 @@
   ];
 
   var HOT = [
-    { val: 'meat', label: 'мясо', hint: 'говяжьи щёчки с луком пореем и кремом пармезан' },
+    { val: 'meat', label: 'мясо', hint: 'говяжьи щёчки с луком‑пореем и кремом пармезан' },
     { val: 'fish', label: 'рыба', hint: 'лосось со спаржей и цветной капустой'            },
   ];
 
@@ -379,6 +379,7 @@
 
     if (cfg.plusOneAllowed && addBtn) {
       addBtn.addEventListener('click', function () {
+        window._haptics?.trigger([20]);
         plusOneCounter++;
         var gid    = 'plus' + plusOneCounter;
         var events = cfg.plusOneEvents || ['day2'];
