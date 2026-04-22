@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "PowerShell(Get-Content \"D:\\\\Claude Code\\\\Wedding\\\\styles.css\" -Raw | Select-String -Pattern \"7\\\\. АД\" -AllMatches | ForEach-Object { $_.Matches } | Select-Object -First 1)",
+      "PowerShell(\\(Get-Content \"D:\\\\Claude Code\\\\Wedding\\\\styles.css\" -Encoding UTF8\\)[-15..-1] -join \"`n\")",
+      "WebFetch(domain:haptics.lochie.me)",
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:www.jsdelivr.com)"
+    ]
+  }
+}

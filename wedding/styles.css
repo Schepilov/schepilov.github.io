@@ -711,6 +711,15 @@ a, button {
   text-align: center;
 }
 
+.chat {
+  margin-top: var(--space-xl);
+  text-align: center;
+}
+
+.chat .btn {
+  margin-top: var(--space-md);
+}
+
 .contacts__list {
   list-style: none;
   margin: var(--space-md) auto 0;
