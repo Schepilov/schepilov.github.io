@@ -108,49 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Хаптик-пульс для сердечек (только после первого жеста пользователя)
-  const PULSE_PERIOD = 2400; // heartPulse длится 2.4s
-  const PULSE_PEAK   = 1200; // пик анимации — 50% цикла
-
-  function msToPeak() {
-    const phase = performance.now() % PULSE_PERIOD;
-    const delta = (PULSE_PEAK - phase + PULSE_PERIOD) % PULSE_PERIOD;
-    return delta || PULSE_PERIOD;
-  }
-
-  function makePulseTimer(onTick) {
-    let timer = null;
-    function tick() { onTick(); timer = setTimeout(tick, PULSE_PERIOD); }
-    timer = setTimeout(tick, msToPeak());
-    return () => clearTimeout(timer);
-  }
-
   function showGate() {
     loaderDone = true;
     loader.classList.add('is-hidden');
     gate.classList.add('is-visible');
     setTimeout(() => loader.remove(), 600);
-    // Gate pulse намеренно не запускаем: браузеры блокируют
-    // вибрацию и Web Audio без предшествующего жеста пользователя.
   }
 
   // Клик по заставке — открываем приглашение
   gate.addEventListener('click', async () => {
-    // Первый хаптик — синхронно внутри жеста.
-    // Это разблокирует AudioContext на iOS и активирует sticky
-    // user activation на Android для всех последующих вызовов.
-    window._haptics?.trigger([35]); // Саша (анимация стартует через 100ms — разница незаметна)
-
     try { await audio.play(); } catch (e) { /* автовоспроизведение может быть заблокировано */ }
     unlockScroll();
     document.body.classList.add('is-open');
     gate.classList.remove('is-visible');
     gate.classList.add('is-hidden');
     setTimeout(() => gate.remove(), 600);
-
-    // Ксюша и «Узнали?» — AudioContext уже разблокирован, работают из setTimeout
-    setTimeout(() => window._haptics?.trigger([35]),  900); // Ксюша
-    setTimeout(() => window._haptics?.trigger([22]), 1800); // Узнали?
   });
 
   // Пауза музыки при скрытии вкладки
@@ -179,8 +151,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (counter) counter.textContent = `${current + 1} / ${total}`;
     }
 
-    carousel.querySelector('.carousel__btn--prev')?.addEventListener('click', () => goTo(current - 1));
-    carousel.querySelector('.carousel__btn--next')?.addEventListener('click', () => goTo(current + 1));
+    carousel.querySelector('.carousel__btn--prev')?.addEventListener('click', () => {
+      window._haptics?.trigger([20]);
+      goTo(current - 1);
+    });
+    carousel.querySelector('.carousel__btn--next')?.addEventListener('click', () => {
+      window._haptics?.trigger([20]);
+      goTo(current + 1);
+    });
 
     if (photos) {
       photos.addEventListener('touchstart', e => {
@@ -189,7 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       photos.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+        if (Math.abs(dx) > 40) {
+          window._haptics?.trigger([20]);
+          goTo(current + (dx < 0 ? 1 : -1));
+        }
       }, { passive: true });
     }
   });
@@ -206,20 +187,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.reveal, .reveal-text').forEach(el => observer.observe(el));
 
-  // Хаптик-пульс синхронно с анимацией сердечка в футере
-  const footerPhoto = document.querySelector('.footer__photo');
-  if (footerPhoto) {
-    let stopFooterPulse = null;
-    new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          stopFooterPulse = makePulseTimer(() => window._haptics?.trigger([28]));
-        } else {
-          stopFooterPulse?.();
-          stopFooterPulse = null;
-        }
-      });
-    }, { threshold: 0.5 }).observe(footerPhoto);
-  }
 
 });

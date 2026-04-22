@@ -90,6 +90,7 @@
       inp.type = 'radio'; inp.name = name;
       inp.id = name + '-' + item.val; inp.value = item.val;
       inp.className = 'sr-only';
+      inp.addEventListener('change', function () { window._haptics?.trigger([18]); });
 
       var lbl = document.createElement('label');
       lbl.htmlFor = inp.id; lbl.className = 'pill';
@@ -111,6 +112,7 @@
       var inp = document.createElement('input');
       inp.type = 'checkbox'; inp.name = namePrefix + '[]';
       inp.id = id; inp.value = val; inp.className = 'sr-only';
+      inp.addEventListener('change', function () { window._haptics?.trigger([18]); });
 
       var lbl = document.createElement('label');
       lbl.htmlFor = id; lbl.className = 'pill';
@@ -163,6 +165,7 @@
       var inp = document.createElement('input');
       inp.type = 'radio'; inp.name = uid(gid, 'hot');
       inp.id = id; inp.value = item.val; inp.className = 'sr-only';
+      inp.addEventListener('change', function () { window._haptics?.trigger([18]); });
 
       var lbl = mk('label', 'hot-option');
       lbl.htmlFor = id;
