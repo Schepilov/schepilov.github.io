@@ -268,7 +268,7 @@
 
       var removeBtn = mk('button', 'guest-card__remove');
       removeBtn.type = 'button';
-      removeBtn.setAttribute('aria-label', 'Удалить гостя');
+      removeBtn.setAttribute('aria-label', 'удалить гостя');
       removeBtn.textContent = '×';
       removeBtn.addEventListener('click', function () { card.remove(); });
       header.appendChild(removeBtn);
@@ -322,7 +322,7 @@
     // Имя для +1
     var nameInp = card.querySelector('.guest-card__name-input');
     if (nameInp && !nameInp.value.trim()) {
-      showError(nameInp, 'Пожалуйста, укажите имя гостя');
+      showError(nameInp, 'пожалуйста, укажите имя гостя');
       ok = false;
     }
 
@@ -330,7 +330,7 @@
     card.querySelectorAll('.rsvp-event').forEach(function (evWrap) {
       var group = evWrap.querySelector('.pill-group');
       if (group && !group.querySelector('input:checked')) {
-        showError(group, 'Пожалуйста, выберите ответ');
+        showError(group, 'пожалуйста, выберите ответ');
         ok = false;
       }
     });
@@ -341,14 +341,14 @@
       // Напитки: хотя бы один чекбокс
       var drinksGroup = partyWrap.querySelector('.pill-group_wrap');
       if (drinksGroup && !drinksGroup.querySelector('input:checked')) {
-        showError(drinksGroup, 'Выберите хотя бы один напиток');
+        showError(drinksGroup, 'выберите хотя бы один напиток');
         ok = false;
       }
 
       // Горячее: радио
       var hotList = partyWrap.querySelector('.hot-list');
       if (hotList && !hotList.querySelector('input:checked')) {
-        showError(hotList, 'Пожалуйста, выберите горячее блюдо');
+        showError(hotList, 'пожалуйста, выберите горячее блюдо');
         ok = false;
       }
 
@@ -357,7 +357,7 @@
       if (allergyField) {
         var allergyGroup = allergyField.querySelector('.pill-group:not(.pill-group_wrap)');
         if (allergyGroup && !allergyGroup.querySelector('input:checked')) {
-          showError(allergyGroup, 'Укажите наличие аллергии или непереносимости');
+          showError(allergyGroup, 'укажите наличие аллергии или непереносимости');
           ok = false;
         }
       }
