@@ -237,7 +237,7 @@ a, button {
   border-radius: var(--radius-pill);
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition: background 0.3s ease, color 0.3s ease, opacity 0.3s ease, outline-color 0.3s ease;
 }
 
 .btn_secondary {
@@ -246,23 +246,41 @@ a, button {
   color: var(--color-accent);
 }
 
-.btn:focus-visible {
-  opacity: 0.85;
+.btn:focus-visible,
+.btn:active {
+  background: color-mix(in srgb, var(--color-accent), black 14%);
 }
 
-.btn_secondary:focus-visible {
+.btn_secondary:focus-visible,
+.btn_secondary:active {
   background: var(--color-accent);
   color: var(--color-bg);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .btn:hover {
-    opacity: 0.85;
+    background: color-mix(in srgb, var(--color-accent), white 18%);
   }
 
   .btn_secondary:hover {
     background: var(--color-accent);
     color: var(--color-bg);
+  }
+
+  .pill:hover {
+    background: rgba(231, 13, 61, 0.1);
+  }
+
+  .sr-only:checked + .pill:hover {
+    background: var(--color-accent);
+  }
+
+  .hot-option:hover {
+    background: rgba(231, 13, 61, 0.07);
+  }
+
+  .sr-only:checked + .hot-option:hover {
+    background: var(--color-accent);
   }
 }
 
@@ -511,7 +529,7 @@ a, button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.22s ease;
   -webkit-tap-highlight-color: transparent;
   padding: 0 0 2px; /* оптическая корректировка символа ‹ › */
 }
@@ -841,7 +859,7 @@ a, button {
   opacity: 0.35;
   cursor: pointer;
   padding: 4px 8px;
-  transition: opacity 0.15s;
+  transition: opacity 0.3s ease;
 }
 .guest-card__remove:hover { opacity: 0.75; }
 
@@ -895,7 +913,8 @@ a, button {
 }
 
 .pill {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   padding: 7px 14px;
   border-radius: var(--radius-pill);
   border: 1.5px solid var(--color-accent);
@@ -903,8 +922,9 @@ a, button {
   font-family: var(--font-body);
   font-size: 15px;
   font-weight: 400;
+  line-height: 1;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.3s ease, color 0.3s ease;
   user-select: none;
   -webkit-user-select: none;
   white-space: nowrap;
@@ -968,7 +988,8 @@ a, button {
   border-radius: var(--radius-md);
   border: 1.5px solid var(--color-accent);
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .sr-only:checked + .hot-option {
@@ -980,7 +1001,7 @@ a, button {
   font-weight: 600;
   font-size: var(--fs-body);
   color: var(--color-text);
-  transition: color 0.15s;
+  transition: color 0.3s ease;
 }
 
 .hot-option__hint {
@@ -989,7 +1010,7 @@ a, button {
   color: var(--color-text);
   opacity: 0.6;
   line-height: 1.35;
-  transition: color 0.15s, opacity 0.15s;
+  transition: color 0.3s ease, opacity 0.3s ease;
 }
 
 .sr-only:checked + .hot-option .hot-option__name,
@@ -1013,6 +1034,20 @@ a, button {
 }
 
 .party-section-wrap[hidden] { display: none; }
+
+/* Ошибки валидации */
+.rsvp-error {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-accent);
+  margin: 4px 0 0;
+  animation: rsvpErrorIn 0.22s ease both;
+}
+
+@keyframes rsvpErrorIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 
 /* ------------------------------------------------------------
@@ -1129,6 +1164,7 @@ a, button {
   pointer-events: none;
   transition: opacity 0.6s ease;
   overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .music-gate.is-visible {
@@ -1301,6 +1337,16 @@ body.is-open .hero-seq-couple {
 .reveal-text.is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Кнопки с reveal: объединяем оба transition */
+.btn.reveal {
+  transition:
+    background    0.3s ease,
+    color         0.3s ease,
+    outline-color 0.3s ease,
+    opacity       0.9s cubic-bezier(0.19, 1, 0.22, 1),
+    transform     0.9s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 

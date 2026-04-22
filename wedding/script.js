@@ -294,6 +294,77 @@
     return card;
   }
 
+  /* ---- Валидация ---- */
+
+  function showError(afterEl, msg) {
+    var err = mk('p', 'rsvp-error');
+    err.textContent = msg;
+    afterEl.insertAdjacentElement('afterend', err);
+
+    // Автосброс ошибки при следующем взаимодействии с полем
+    var container = afterEl.closest('.rsvp-event, .rsvp-field, .guest-card__header');
+    if (container) {
+      container.querySelectorAll('input').forEach(function (inp) {
+        var evType = inp.type === 'text' ? 'input' : 'change';
+        inp.addEventListener(evType, function () {
+          if (err.parentNode) err.remove();
+        }, { once: true });
+      });
+    }
+  }
+
+  function validateCard(card) {
+    var ok = true;
+
+    // Имя для +1
+    var nameInp = card.querySelector('.guest-card__name-input');
+    if (nameInp && !nameInp.value.trim()) {
+      showError(nameInp, 'Пожалуйста, укажите имя гостя');
+      ok = false;
+    }
+
+    // Присутствие на каждом мероприятии
+    card.querySelectorAll('.rsvp-event').forEach(function (evWrap) {
+      var group = evWrap.querySelector('.pill-group');
+      if (group && !group.querySelector('input:checked')) {
+        showError(group, 'Пожалуйста, выберите ответ');
+        ok = false;
+      }
+    });
+
+    // Блок вечеринки — только если открыт
+    var partyWrap = card.querySelector('.party-section-wrap');
+    if (partyWrap && !partyWrap.hidden) {
+      // Напитки: хотя бы один чекбокс
+      var drinksGroup = partyWrap.querySelector('.pill-group_wrap');
+      if (drinksGroup && !drinksGroup.querySelector('input:checked')) {
+        showError(drinksGroup, 'Выберите хотя бы один напиток');
+        ok = false;
+      }
+
+      // Горячее: радио
+      var hotList = partyWrap.querySelector('.hot-list');
+      if (hotList && !hotList.querySelector('input:checked')) {
+        showError(hotList, 'Пожалуйста, выберите горячее блюдо');
+        ok = false;
+      }
+
+      // Аллергия: да/нет радио
+      var allergyField = partyWrap.querySelector('.rsvp-field:last-child');
+      if (allergyField) {
+        var allergyGroup = allergyField.querySelector('.pill-group:not(.pill-group_wrap)');
+        if (allergyGroup && !allergyGroup.querySelector('input:checked')) {
+          showError(allergyGroup, 'Укажите наличие аллергии или непереносимости');
+          ok = false;
+        }
+      }
+    }
+
+    return ok;
+  }
+
+  /* ---- Init ---- */
+
   function init() {
     var list   = document.getElementById('rsvp-guest-list');
     var addBtn = document.getElementById('rsvp-add-btn');
@@ -309,11 +380,44 @@
         var gid    = 'plus' + plusOneCounter;
         var events = cfg.plusOneEvents || ['day2'];
         var card   = buildGuestCard(gid, '', events, true);
+
+        // При удалении карточки возвращаем кнопку
+        var removeBtn = card.querySelector('.guest-card__remove');
+        if (removeBtn) {
+          removeBtn.addEventListener('click', function () {
+            addBtn.style.display = '';
+          });
+        }
+
         list.appendChild(card);
         card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        addBtn.style.display = 'none';
       });
     } else if (addBtn) {
       addBtn.style.display = 'none';
+    }
+
+    // Валидация при отправке
+    var form = document.getElementById('rsvp-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Очищаем старые ошибки
+        form.querySelectorAll('.rsvp-error').forEach(function (el) { el.remove(); });
+
+        var isValid = true;
+        form.querySelectorAll('.guest-card').forEach(function (card) {
+          if (!validateCard(card)) isValid = false;
+        });
+
+        if (!isValid) {
+          window._haptics?.trigger('error');
+          var first = form.querySelector('.rsvp-error');
+          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        // else: здесь отправка данных
+      });
     }
   }
 

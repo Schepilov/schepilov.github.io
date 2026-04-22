@@ -1,3 +1,12 @@
+// Хаптик — инициализируем сразу, до DOMContentLoaded
+window._haptics = null;
+(async () => {
+  try {
+    const { WebHaptics } = await import('https://cdn.jsdelivr.net/npm/web-haptics/+esm');
+    window._haptics = new WebHaptics();
+  } catch (e) { /* устройство не поддерживает */ }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
 
   // Сброс скролла в ноль при каждом открытии
@@ -168,5 +177,40 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.reveal, .reveal-text').forEach(el => observer.observe(el));
+
+  // Хаптик-пульс синхронно с анимацией сердечка в футере
+  const footerPhoto = document.querySelector('.footer__photo');
+  if (footerPhoto) {
+    const PERIOD      = 2400; // heartPulse длится 2.4s
+    const PEAK_OFFSET = 1200; // пик анимации — 50% цикла = 1200ms
+
+    let heartTimer = null;
+
+    function msToNextPeak() {
+      const phase = performance.now() % PERIOD;
+      const delta = (PEAK_OFFSET - phase + PERIOD) % PERIOD;
+      return delta || PERIOD;
+    }
+
+    function startHeartbeat() {
+      function tick() {
+        window._haptics?.trigger([28]);
+        heartTimer = setTimeout(tick, PERIOD);
+      }
+      heartTimer = setTimeout(tick, msToNextPeak());
+    }
+
+    function stopHeartbeat() {
+      clearTimeout(heartTimer);
+      heartTimer = null;
+    }
+
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) startHeartbeat();
+        else stopHeartbeat();
+      });
+    }, { threshold: 0.5 }).observe(footerPhoto);
+  }
 
 });
