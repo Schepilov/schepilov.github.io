@@ -89,24 +89,44 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(animateLoader);
 
   // Отслеживаем загрузку изображений
-  const images = Array.from(document.images);
-  if (images.length === 0) {
-    targetProgress = 100;
-  } else {
+    const images = Array.from(document.images);
+
+  const imagesReadyPromise = new Promise(resolve => {
+    if (images.length === 0) {
+      targetProgress = 90;
+      resolve();
+      return;
+    }
+
     let loaded = 0;
+
     function onImageLoad() {
       loaded++;
-      targetProgress = Math.round((loaded / images.length) * 100);
+      targetProgress = Math.round((loaded / images.length) * 90);
+
+      if (loaded >= images.length) {
+        resolve();
+      }
     }
+
     images.forEach(img => {
       if (img.complete) {
         onImageLoad();
       } else {
-        img.addEventListener('load',  onImageLoad, { once: true });
+        img.addEventListener('load', onImageLoad, { once: true });
         img.addEventListener('error', onImageLoad, { once: true });
       }
     });
-  }
+  });
+
+  const inviteReadyPromise =
+    window.__inviteReadyPromise instanceof Promise
+      ? window.__inviteReadyPromise
+      : Promise.resolve();
+
+  Promise.all([imagesReadyPromise, inviteReadyPromise]).then(() => {
+    targetProgress = 100;
+  });
 
   function showGate() {
     loaderDone = true;

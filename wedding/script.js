@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------
-   1. Подстановка текстов из config.js в [data-text="..."]
+   0. Подстановка текстов из config.js в [data-text="..."]
    ---------------------------------------------------------- */
 
 (function () {
@@ -25,16 +25,153 @@
   }
 })();
 
+/* ----------------------------------------------------------
+   1. API для связи с Google Sheets
+   ---------------------------------------------------------- */
+
+
+(function () {
+  'use strict';
+
+  var API_BASE = 'https://script.google.com/macros/s/AKfycbxXe2jl4dQ5c4frqIFlG1OJ58VuZv63onj_-1X_q07-Me67cevuPqd8UVIwcHll487r4Q/exec';
+
+  window.WEDDING_API = {
+    baseUrl: API_BASE,
+    inviteData: null,
+    responseData: null,
+    token: null,
+  };
+
+    window.__inviteReadyResolve = null;
+    window.__inviteReadyPromise = new Promise(function (resolve) {
+      window.__inviteReadyResolve = resolve;
+  });
+
+  function getTokenFromUrl() {
+    var params = new URLSearchParams(window.location.search);
+    return (params.get('i') || '').trim();
+  }
+
+  function hideEverythingExceptHero() {
+    document.querySelectorAll('main.page > *').forEach(function (el) {
+      if (!el.classList.contains('hero')) {
+        el.hidden = true;
+      }
+    });
+
+    document.querySelectorAll('.schedule__sep').forEach(function (el) {
+      el.hidden = true;
+    });
+  }
+
+  function showMainContent() {
+    document.querySelectorAll('main.page > *').forEach(function (el) {
+      el.hidden = false;
+    });
+
+    document.querySelectorAll('.schedule__sep').forEach(function (el) {
+      el.hidden = false;
+    });
+  }
+
+  function applyInviteVisibility(invite) {
+    var day1 = document.querySelector('.js-day1');
+    var dinner = document.querySelector('.js-dinner');
+    var day2 = document.querySelector('.js-day2');
+    var chat = document.getElementById('chat');
+
+    if (day1) day1.hidden = !invite.showDay1;
+    if (dinner) dinner.hidden = !invite.showDinner;
+    if (day2) day2.hidden = !invite.showDay2;
+    if (chat) chat.hidden = !invite.showChat;
+
+    var sepZags = document.querySelector('.js-sep-zags');
+    var sepParty = document.querySelector('.js-sep-party');
+
+    if (sepZags) {
+      sepZags.hidden = !(invite.showDay1 && invite.showDinner);
+    }
+
+    if (sepParty) {
+      var beforePartyVisible = invite.showDay1 || invite.showDinner;
+      sepParty.hidden = !(beforePartyVisible && invite.showDay2);
+    }
+  }
+
+  async function loadInvite() {
+    var token = getTokenFromUrl();
+    window.WEDDING_API.token = token;
+
+    if (!token) {
+      hideEverythingExceptHero();
+      if (typeof window.__inviteReadyResolve === 'function') {
+        window.__inviteReadyResolve();
+      }
+      console.log('[WEDDING API] Нет токена — оставляем только базу');
+      return;
+    }
+
+    try {
+      var url = API_BASE + '?action=invite&token=' + encodeURIComponent(token);
+      var res = await fetch(url, { method: 'GET' });
+      var data = await res.json();
+
+      if (!data || !data.ok) {
+        console.error('[WEDDING API] Ошибка ответа API:', data);
+        hideEverythingExceptHero();
+        return;
+      }
+
+      window.WEDDING_API.inviteData = data.invite || null;
+      window.WEDDING_API.responseData = data.response || null;
+
+      showMainContent();
+      applyInviteVisibility(window.WEDDING_API.inviteData);
+
+      if (typeof window.initRsvpForm === 'function') {
+        window.initRsvpForm();
+      }
+
+      if (typeof window.__inviteReadyResolve === 'function') {
+        window.__inviteReadyResolve();
+      }
+
+      console.log('[WEDDING API] invite:', window.WEDDING_API.inviteData);
+      console.log('[WEDDING API] response:', window.WEDDING_API.responseData);
+
+    } catch (err) {
+      console.error('[WEDDING API] Ошибка загрузки приглашения:', err);
+      hideEverythingExceptHero();
+      if (typeof window.__inviteReadyResolve === 'function') {
+        window.__inviteReadyResolve();
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadInvite);
+  } else {
+    loadInvite();
+  }
+})();
+
 
 /* ----------------------------------------------------------
    2. Анкета гостей (RSVP) — формируется из window.RSVP_CONFIG
    ---------------------------------------------------------- */
 
-(function () {
+window.initRsvpForm = function () {
   'use strict';
 
-  var cfg = window.RSVP_CONFIG;
-  if (!cfg) return;
+  var cfg = window.RSVP_CONFIG || {};
+  var api = window.WEDDING_API || {};
+  var invite = api.inviteData || null;
+
+  if (!invite) return;
+
+  cfg.guests = Array.isArray(invite.guests) ? invite.guests : [];
+  cfg.plusOneAllowed = !!invite.plusOneAllowed;
+  cfg.plusOneEvents = Array.isArray(invite.plusOneEvents) ? invite.plusOneEvents : [];
 
   var EVENTS = {
     day1:   'на росписи (16 июля)',
@@ -132,22 +269,6 @@
 
     var pills = makeCheckPills(uid(gid, 'drinks'), DRINKS);
     wrap.appendChild(pills);
-
-    var reveal = mk('div', 'rsvp-reveal');
-    reveal.hidden = true;
-    var tinp = document.createElement('input');
-    tinp.type = 'text'; tinp.name = uid(gid, 'drinks_strong_detail');
-    tinp.placeholder = 'Уточните предпочтение (виски, коньяк, водка…)';
-    tinp.className = 'rsvp-input';
-    reveal.appendChild(tinp);
-    wrap.appendChild(reveal);
-
-    var strongCb = pills.querySelector('#' + uid(gid, 'drinks') + '-strong');
-    if (strongCb) {
-      strongCb.addEventListener('change', function () {
-        reveal.hidden = !this.checked;
-      });
-    }
 
     return wrap;
   }
@@ -297,6 +418,47 @@
     return card;
   }
 
+  function ensurePlusOneCard(savedGuest) {
+    if (!savedGuest || !savedGuest.isPlusOne) return null;
+
+    var existing = document.querySelector('.guest-card[data-guest-id="' + savedGuest.guestId + '"]');
+    if (existing) return existing;
+
+    var list = document.getElementById('rsvp-guest-list');
+    var addBtn = document.getElementById('rsvp-add-btn');
+    if (!list) return null;
+
+    var events = Object.keys(savedGuest.attendance || {}).filter(function (key) {
+      return ['day1', 'dinner', 'day2'].indexOf(key) !== -1;
+    });
+
+    if (!events.length) {
+      events = cfg.plusOneEvents || ['day2'];
+    }
+
+    var card = buildGuestCard(savedGuest.guestId, '', events, true);
+
+    var nameInp = card.querySelector('.guest-card__name-input');
+    if (nameInp) {
+      nameInp.value = savedGuest.name || '';
+    }
+
+    var removeBtn = card.querySelector('.guest-card__remove');
+    if (removeBtn && addBtn) {
+      removeBtn.addEventListener('click', function () {
+        addBtn.style.display = '';
+      });
+    }
+
+    list.appendChild(card);
+
+    if (addBtn) {
+      addBtn.style.display = 'none';
+    }
+
+    return card;
+  }
+
   /* ---- Валидация ---- */
 
   function showError(afterEl, msg) {
@@ -366,6 +528,97 @@
     return ok;
   }
 
+  function prefillFormFromResponse() {
+    var response = window.WEDDING_API && window.WEDDING_API.responseData;
+    if (!response || !response.exists || !response.data || !Array.isArray(response.data.guests)) {
+      return;
+    }
+
+    response.data.guests.forEach(function (savedGuest) {
+      if (!savedGuest || !savedGuest.guestId) return;
+
+      var card = document.querySelector('.guest-card[data-guest-id="' + savedGuest.guestId + '"]');
+
+      if (!card && savedGuest.isPlusOne) {
+        card = ensurePlusOneCard(savedGuest);
+      }
+
+      if (!card) return;
+
+      if (savedGuest.isPlusOne) {
+        var plusOneNameInput = card.querySelector('.guest-card__name-input');
+        if (plusOneNameInput) {
+          plusOneNameInput.value = savedGuest.name || '';
+        }
+      }
+
+      if (savedGuest.attendance) {
+        Object.keys(savedGuest.attendance).forEach(function (eventKey) {
+          var value = savedGuest.attendance[eventKey];
+          if (!value) return;
+
+          var input = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-att-' + eventKey + '"][value="' + value + '"]');
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }
+
+      if (savedGuest.party) {
+        if (savedGuest.party.hot) {
+          var hotInput = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-hot"][value="' + savedGuest.party.hot + '"]');
+          if (hotInput) {
+            hotInput.checked = true;
+            hotInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+
+        if (savedGuest.party.allergy) {
+          (savedGuest.party.drinks || []).forEach(function (val) {
+          var input = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-drinks[]"][value="' + val + '"]');
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+          var allergyInput = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-allergy"][value="' + savedGuest.party.allergy + '"]');
+          if (allergyInput) {
+            allergyInput.checked = true;
+            allergyInput.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+
+        (savedGuest.party.allergens || []).forEach(function (val) {
+          var input = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-allergens[]"][value="' + val + '"]');
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+
+        var allergensCustom = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-allergens_custom"]');
+        if (allergensCustom) {
+          allergensCustom.value = savedGuest.party.allergensCustom || '';
+        }
+
+        (savedGuest.party.intolerances || []).forEach(function (val) {
+          var input = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-intolerances[]"][value="' + val + '"]');
+          if (input) {
+            input.checked = true;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+
+        var intolerancesCustom = card.querySelector('input[name="rsvp-' + savedGuest.guestId + '-intolerances_custom"]');
+        if (intolerancesCustom) {
+          intolerancesCustom.value = savedGuest.party.intolerancesCustom || '';
+        }
+      }
+    });
+  }
+
+
   /* ---- Init ---- */
 
   function init() {
@@ -376,6 +629,8 @@
     (cfg.guests || []).forEach(function (g) {
       list.appendChild(buildGuestCard(g.id, g.name, g.events, false));
     });
+
+    prefillFormFromResponse();
 
     if (cfg.plusOneAllowed && addBtn) {
       addBtn.addEventListener('click', function () {
@@ -404,41 +659,170 @@
     // Валидация при отправке
     var form = document.getElementById('rsvp-form');
     if (form) {
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
 
-        // Очищаем старые ошибки
-        form.querySelectorAll('.rsvp-error').forEach(function (el) { el.remove(); });
+      var submitBtn = form.querySelector('button[type="submit"], .btn[type="submit"], input[type="submit"]');
+      var isSubmitting = false;
+      var submitBtnDefaultText = submitBtn ? submitBtn.textContent : '';
 
-        var isValid = true;
-        form.querySelectorAll('.guest-card').forEach(function (card) {
-          if (!validateCard(card)) isValid = false;
-        });
+            function setSubmittingState(state) {
+        isSubmitting = state;
 
-        if (!isValid) {
-          window._haptics?.trigger('error');
-          var first = form.querySelector('.rsvp-error');
-          if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (!submitBtn) return;
+
+        submitBtn.disabled = state;
+        submitBtn.setAttribute('aria-busy', state ? 'true' : 'false');
+
+        if (state) {
+          submitBtn.textContent = 'Отправляем…';
+          submitBtn.classList.add('is-loading');
         } else {
-          window._haptics?.trigger('success');
-          var section = document.getElementById('rsvp');
-          if (section) {
-            section.classList.add('rsvp--done');
-            // Прячем разделитель-сердечко перед секцией
-            var prevSep = section.previousElementSibling;
-            if (prevSep && prevSep.classList.contains('schedule__sep')) {
-              prevSep.style.display = 'none';
-            }
-          }
-          var confirm = document.getElementById('rsvp-confirm');
-          if (confirm) {
-            confirm.hidden = false;
-            setTimeout(function () {
-              confirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 50);
-          }
+          submitBtn.textContent = submitBtnDefaultText;
+          submitBtn.classList.remove('is-loading');
         }
-      });
+      }
+
+        function getCheckedValue(root, name) {
+          var el = root.querySelector('input[name="' + name + '"]:checked');
+          return el ? el.value : '';
+        }
+
+  function getCheckedValues(root, name) {
+    return Array.from(root.querySelectorAll('input[name="' + name + '[]"]:checked')).map(function (el) {
+      return el.value;
+    });
+  }
+
+  function collectGuestPayload(card) {
+    var guestId = card.getAttribute('data-guest-id') || '';
+    var guestNameInput = card.querySelector('.guest-card__name-input');
+    var guestNameTitle = card.querySelector('.guest-card__name');
+
+    var guestName = '';
+    if (guestNameInput) {
+      guestName = (guestNameInput.value || '').trim();
+    } else if (guestNameTitle) {
+      guestName = (guestNameTitle.textContent || '').trim();
+    }
+
+    var eventKeys = [];
+    card.querySelectorAll('.rsvp-event').forEach(function (ev) {
+      var label = ev.querySelector('.rsvp-field__label');
+      if (!label) return;
+
+      var text = (label.textContent || '').toLowerCase();
+      if (text.indexOf('росписи') !== -1) eventKeys.push('day1');
+      else if (text.indexOf('семейном ужине') !== -1) eventKeys.push('dinner');
+      else if (text.indexOf('вечеринке') !== -1) eventKeys.push('day2');
+    });
+
+    var attendance = {};
+    eventKeys.forEach(function (key) {
+      attendance[key] = getCheckedValue(card, 'rsvp-' + guestId + '-att-' + key);
+    });
+
+    return {
+      guestId: guestId,
+      name: guestName,
+      isPlusOne: guestId.indexOf('plus1') === 0,
+      attendance: attendance,
+      party: {
+        drinks: getCheckedValues(card, 'rsvp-' + guestId + '-drinks'),
+        hot: getCheckedValue(card, 'rsvp-' + guestId + '-hot'),
+        allergy: getCheckedValue(card, 'rsvp-' + guestId + '-allergy'),
+        allergens: getCheckedValues(card, 'rsvp-' + guestId + '-allergens'),
+        allergensCustom: (card.querySelector('input[name="rsvp-' + guestId + '-allergens_custom"]') || {}).value || '',
+        intolerances: getCheckedValues(card, 'rsvp-' + guestId + '-intolerances'),
+        intolerancesCustom: (card.querySelector('input[name="rsvp-' + guestId + '-intolerances_custom"]') || {}).value || ''
+      }
+    };
+  }
+
+  function collectFormPayload() {
+    var cards = Array.from(document.querySelectorAll('.guest-card'));
+
+    return {
+      action: 'submit_rsvp',
+      token: (window.WEDDING_API && window.WEDDING_API.token) ? window.WEDDING_API.token : '',
+      guests: cards.map(collectGuestPayload)
+    };
+  }
+
+  
+  async function submitPayloadToApi(payload) {
+    var apiBase = window.WEDDING_API && window.WEDDING_API.baseUrl;
+    if (!apiBase) {
+      throw new Error('API base URL not found');
+    }
+
+    var res = await fetch(apiBase, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    return res.json();
+  }
+
+
+        form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  if (isSubmitting) return;
+
+    var cards = Array.from(document.querySelectorAll('.guest-card'));
+    var firstInvalid = null;
+
+    cards.forEach(function (card) {
+      var ok = validateCard(card);
+      if (!ok && !firstInvalid) firstInvalid = card;
+    });
+
+    if (firstInvalid) {
+      window._haptics?.trigger('error');
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    try {
+      setSubmittingState(true);
+
+      var payload = collectFormPayload();
+      var result = await submitPayloadToApi(payload);
+
+      if (!result || !result.ok) {
+        throw new Error((result && result.error) || 'Submit failed');
+      }
+
+      window._haptics?.trigger('success');
+
+      var section = document.getElementById('rsvp');
+      if (section) {
+        section.classList.add('rsvp--done');
+        var prevSep = section.previousElementSibling;
+        if (prevSep && prevSep.classList.contains('schedule__sep')) {
+          prevSep.style.display = 'none';
+        }
+      }
+
+      var confirm = document.getElementById('rsvp-confirm');
+      if (confirm) {
+        confirm.hidden = false;
+        setTimeout(function () {
+          confirm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+      }
+
+      console.log('[WEDDING API] submit result:', result);
+
+    } catch (err) {
+      console.error('[WEDDING API] submit error:', err);
+      window._haptics?.trigger('error');
+      alert('Не удалось отправить анкету. Попробуйте ещё раз.');
+      setSubmittingState(false);
+    }
+  });
     }
   }
 
@@ -447,4 +831,4 @@
   } else {
     init();
   }
-})();
+};

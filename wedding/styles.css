@@ -79,6 +79,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: auto;
   overflow-x: clip;
@@ -240,6 +244,11 @@ a, button {
   transition: background 0.3s ease, color 0.3s ease, opacity 0.3s ease, outline-color 0.3s ease;
 }
 
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .btn_secondary {
   background: transparent;
   outline: 2px solid var(--color-accent);
@@ -265,6 +274,7 @@ a, button {
   .btn_secondary:hover {
     background: var(--color-accent);
     color: var(--color-bg);
+    outline: none;
   }
 
   .pill:hover {
