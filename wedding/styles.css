@@ -695,6 +695,14 @@ a, button {
   max-width: var(--max-text);
 }
 
+/* ---- Иконки блоков (Мини-пожелание / 18+ / Чатик) ---- */
+.block-icon {
+  display: block;
+  margin: 0 auto var(--space-sm);
+  height: 52px;
+  width: auto;
+}
+
 /* ---- 18+ / Пожелания / Контакты ---- */
 .age-limit {
   margin-top: var(--space-xl);
@@ -713,6 +721,7 @@ a, button {
 
 .chat {
   margin-top: var(--space-xl);
+  margin-bottom: var(--space-lg);
   text-align: center;
 }
 

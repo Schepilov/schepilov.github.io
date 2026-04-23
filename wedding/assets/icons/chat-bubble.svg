@@ -1,0 +1,8 @@
+<svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- пузырь сообщения с хвостиком -->
+  <path d="M5.5 2C3.8 2.2 2.5 3.8 2.5 5.6L2.8 25.2C2.8 27 4.2 28.4 6.2 28.6L14.8 28.6L13.2 37L25.8 28.6L38.8 28.8C40.6 28.6 42 27 42.2 25.2L42.5 5.8C42.7 4 41.2 2.3 39.5 2.2L5.5 2Z" fill="#E70D3D"/>
+  <!-- три точки -->
+  <circle cx="15" cy="15.5" r="3" fill="#FCEAEE"/>
+  <circle cx="22" cy="15.5" r="3" fill="#FCEAEE"/>
+  <circle cx="29" cy="15.5" r="3" fill="#FCEAEE"/>
+</svg>
