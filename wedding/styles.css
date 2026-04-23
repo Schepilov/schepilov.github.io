@@ -636,9 +636,14 @@ a, button {
   opacity: 0.7;
 }
 
-.schedule__venue-title {
+/*.schedule__venue-title {
   margin-top: var(--space-xl);
   margin-bottom: var(--space-md);
+} */
+
+.venue-block {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
 }
 
 .venue {
@@ -647,6 +652,8 @@ a, button {
   align-items: center;
   gap: var(--space-md);
 }
+
+
 
 .venue__polaroid {
   max-width: 380px;
@@ -698,8 +705,8 @@ a, button {
 /* ---- Иконки блоков (Мини-пожелание / 18+ / Чатик) ---- */
 .block-icon {
   display: block;
-  margin: 0 auto var(--space-sm);
-  height: 52px;
+  margin: 0 auto;
+  height: 75px;
   width: auto;
 }
 
