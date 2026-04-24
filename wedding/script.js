@@ -107,7 +107,6 @@
       if (typeof window.__inviteReadyResolve === 'function') {
         window.__inviteReadyResolve();
       }
-      console.log('[WEDDING API] Нет токена — оставляем только базу');
       return;
     }
 
@@ -136,8 +135,6 @@
         window.__inviteReadyResolve();
       }
 
-      console.log('[WEDDING API] invite:', window.WEDDING_API.inviteData);
-      console.log('[WEDDING API] response:', window.WEDDING_API.responseData);
 
     } catch (err) {
       console.error('[WEDDING API] Ошибка загрузки приглашения:', err);
@@ -814,7 +811,6 @@ window.initRsvpForm = function () {
         }, 50);
       }
 
-      console.log('[WEDDING API] submit result:', result);
 
     } catch (err) {
       console.error('[WEDDING API] submit error:', err);
