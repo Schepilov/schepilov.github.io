@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   requestAnimationFrame(animateLoader);
 
   // Отслеживаем загрузку изображений
-    const images = Array.from(document.images);
+    const images = Array.from(document.images).filter(img => img.loading !== 'lazy');
 
   const imagesReadyPromise = new Promise(resolve => {
     if (images.length === 0) {
