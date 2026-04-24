@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showGate() {
     loaderDone = true;
+    audio.load();
     loader.classList.add('is-hidden');
     gate.classList.add('is-visible');
     setTimeout(() => loader.remove(), 600);
