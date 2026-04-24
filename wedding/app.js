@@ -2,7 +2,7 @@
 window._haptics = null;
 (async () => {
   try {
-    const { WebHaptics } = await import('https://cdn.jsdelivr.net/npm/web-haptics/+esm');
+    const { WebHaptics } = await import('./assets/js/web-haptics.js');
     window._haptics = new WebHaptics();
   } catch (e) { /* устройство не поддерживает */ }
 })();
