@@ -1,11 +1,5 @@
-// Хаптик — инициализируем сразу, до DOMContentLoaded
-window._haptics = null;
-(async () => {
-  try {
-    const { WebHaptics } = await import('https://cdn.jsdelivr.net/npm/web-haptics/+esm');
-    window._haptics = new WebHaptics();
-  } catch (e) { /* устройство не поддерживает */ }
-})();
+// Хаптик — обёртка над Vibration API (Android Chrome)
+window._haptics = { trigger: (pattern) => navigator.vibrate?.(pattern) };
 
 document.addEventListener('DOMContentLoaded', () => {
 
