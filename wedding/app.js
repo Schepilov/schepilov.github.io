@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Клик по заставке — открываем приглашение
   gate.addEventListener('click', async () => {
+    window._haptics?.trigger('success');
     try { await audio.play(); } catch (e) { /* автовоспроизведение может быть заблокировано */ }
     unlockScroll();
     document.body.classList.add('is-open');
