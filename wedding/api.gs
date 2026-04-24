@@ -118,6 +118,10 @@ function getAnswersSpreadsheet() {
 }
 
 function getInviteByToken(token) {
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('invite_' + token);
+  if (cached) return parseJsonSafe(cached, null);
+
   var sheet = getSpreadsheet().getSheetByName('Invites');
   if (!sheet) throw new Error('Sheet "Invites" not found');
 
@@ -138,7 +142,7 @@ function getInviteByToken(token) {
         return null;
       }
 
-      return {
+      var invite = {
         token: String(obj.token || ''),
         groupLabel: String(obj.group_label || ''),
         guests: parseJsonSafe(obj.guests_json, []),
@@ -149,6 +153,9 @@ function getInviteByToken(token) {
         plusOneEvents: parseJsonSafe(obj.plus_one_events_json, []),
         showChat: toBoolean(obj.show_chat)
       };
+
+      try { cache.put('invite_' + token, JSON.stringify(invite), 21600); } catch (e) {}
+      return invite;
     }
   }
 
@@ -156,40 +163,44 @@ function getInviteByToken(token) {
 }
 
 function getLatestResponseByToken(token) {
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('response_' + token);
+  if (cached) return parseJsonSafe(cached, null);
+
   var sheet = getSpreadsheet().getSheetByName('Responses');
   if (!sheet) throw new Error('Sheet "Responses" not found');
 
   var lastRow = sheet.getLastRow();
   var lastCol = sheet.getLastColumn();
 
+  var result;
+
   if (lastRow < 2) {
-    return {
-      exists: false,
-      data: null
-    };
-  }
+    result = { exists: false, data: null };
+  } else {
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var rows = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
 
-  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
-  var rows = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
+    result = { exists: false, data: null };
 
-  for (var i = rows.length - 1; i >= 0; i--) {
-    var row = rows[i];
-    var obj = rowToObject(headers, row);
+    for (var i = rows.length - 1; i >= 0; i--) {
+      var row = rows[i];
+      var obj = rowToObject(headers, row);
 
-    if (String(obj.token).trim() === token && toBoolean(obj.is_latest)) {
-      return {
-        exists: true,
-        responseId: String(obj.response_id || ''),
-        submittedAt: String(obj.submitted_at || ''),
-        data: parseJsonSafe(obj.payload_json, null)
-      };
+      if (String(obj.token).trim() === token && toBoolean(obj.is_latest)) {
+        result = {
+          exists: true,
+          responseId: String(obj.response_id || ''),
+          submittedAt: String(obj.submitted_at || ''),
+          data: parseJsonSafe(obj.payload_json, null)
+        };
+        break;
+      }
     }
   }
 
-  return {
-    exists: false,
-    data: null
-  };
+  try { cache.put('response_' + token, JSON.stringify(result), 3600); } catch (e) {}
+  return result;
 }
 
 function saveResponse(payload) {
@@ -227,6 +238,8 @@ function saveResponse(payload) {
     submittedAt,
     JSON.stringify(payload)
   ]);
+
+  try { CacheService.getScriptCache().remove('response_' + payload.token); } catch (e) {}
 
   return {
     responseId: responseId,
@@ -597,6 +610,37 @@ function fillTokenForSelectedRow() {
   fillTokenForRow(row);
 }
 
+function warmup() {
+  getSpreadsheet();
+}
+
+function clearAllCache() {
+  CacheService.getScriptCache().removeAll(
+    getSpreadsheet().getSheetByName('Invites')
+      .getRange(2, 1, Math.max(1, getSpreadsheet().getSheetByName('Invites').getLastRow() - 1), 1)
+      .getValues()
+      .map(function (r) { return 'invite_' + String(r[0]).trim(); })
+      .concat(
+        getSpreadsheet().getSheetByName('Responses').getLastRow() > 1
+          ? getSpreadsheet().getSheetByName('Responses')
+              .getRange(2, 2, getSpreadsheet().getSheetByName('Responses').getLastRow() - 1, 1)
+              .getValues()
+              .map(function (r) { return 'response_' + String(r[0]).trim(); })
+          : []
+      )
+  );
+}
+
+function runClearAllCache() {
+  var ui = SpreadsheetApp.getUi();
+  try {
+    clearAllCache();
+    ui.alert('Готово', 'Кеш инвайтов и ответов сброшен.', ui.ButtonSet.OK);
+  } catch (err) {
+    ui.alert('Ошибка', String(err), ui.ButtonSet.OK);
+  }
+}
+
 function buildWeddingMenu() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Wedding API')
@@ -605,6 +649,8 @@ function buildWeddingMenu() {
     .addItem('Сгенерировать токен для одной строки', 'runFillTokenForSelectedRow')
     .addItem('Сгенерировать токены для нескольких строк', 'runFillTokensForSelectedRows')
     .addItem('Сгенерировать токен по номеру строки', 'promptFillTokenForRow')
+    .addSeparator()
+    .addItem('Сбросить кеш', 'runClearAllCache')
     .addToUi();
 }
 
