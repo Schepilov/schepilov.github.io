@@ -7,7 +7,9 @@
       "WebFetch(domain:haptics.lochie.me)",
       "WebFetch(domain:github.com)",
       "WebSearch",
-      "WebFetch(domain:www.jsdelivr.com)"
+      "WebFetch(domain:www.jsdelivr.com)",
+      "Bash(sips --help)",
+      "Bash(cwebp -version)"
     ]
   }
 }
